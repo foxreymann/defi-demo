@@ -58,6 +58,10 @@ contract TokenFarm {
         isStaking[msg.sender] = false;
     }
 
+    function getDaiStakers() public view returns(address[] memory) {
+      return stakers;
+    }
+
     // Issuing Tokens
     function issueDappTokens() public {
         // Only owner can call this function

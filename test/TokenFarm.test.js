@@ -79,6 +79,10 @@ contract('TokenFarm', ([owner, investor]) => {
       result = await tokenFarm.isStaking(investor);
       assert.equal(result.toString(), 'true', 'investor staking status correct after staking');
 
+      // query all stakers - 1 staker
+      result = await tokenFarm.getDaiStakers()
+console.log({result})
+
       // Issue Tokens
       await tokenFarm.issueDappTokens({ from: owner });
 
