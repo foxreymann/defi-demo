@@ -81,7 +81,7 @@ contract('TokenFarm', ([owner, investor]) => {
 
       // query all stakers - 1 staker
       result = await tokenFarm.getDaiStakers()
-console.log({result})
+      expect(result).to.have.members([investor]);
 
       // Issue Tokens
       await tokenFarm.issueDappTokens({ from: owner });
