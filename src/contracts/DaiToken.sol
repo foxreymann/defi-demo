@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Copyright
 pragma solidity ^0.8.0;
 
 contract DaiToken {
@@ -21,7 +22,7 @@ contract DaiToken {
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
 
-    constructor() public {
+    constructor() {
         balanceOf[msg.sender] = totalSupply;
     }
 

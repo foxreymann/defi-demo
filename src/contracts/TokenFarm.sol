@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Copyright
 pragma solidity ^0.8.0;
 
 import "./DappToken.sol";
@@ -19,7 +20,7 @@ contract TokenFarm {
       uint balance;
     }
 
-    constructor(DappToken _dappToken, DaiToken _daiToken) public {
+    constructor(DappToken _dappToken, DaiToken _daiToken) {
         dappToken = _dappToken;
         daiToken = _daiToken;
         owner = msg.sender;
