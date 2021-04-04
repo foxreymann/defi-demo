@@ -62,18 +62,4 @@ contract TokenFarm {
       return stakers;
     }
 
-    // Issuing Tokens
-    function issueDappTokens() public {
-        // Only owner can call this function
-        require(msg.sender == owner, "caller must be the owner");
-
-        // Issue tokens to all stakers
-        for (uint i = 0; i < stakers.length; i++) {
-            address recipient = stakers[i];
-            uint balance = stakingBalance[recipient];
-            if(balance > 0) {
-                dappToken.transfer(recipient, balance);
-            }
-        }
-    }
 }

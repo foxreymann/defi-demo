@@ -11,9 +11,10 @@ function tokens(n) {
   return web3.utils.toWei(n, 'ether');
 }
 
-// owner => accounts[0] and investor => accounts[1]
-contract('TokenFarm', ([owner, investor]) => {
+contract('TokenFarm', (accounts) => {
   let daiToken, dappToken, tokenFarm;
+
+  let [owner, investor] = accounts
 
   before(async () => {
     // Load Contracts
@@ -24,8 +25,9 @@ contract('TokenFarm', ([owner, investor]) => {
     // Transfer all Dapp tokens to farm (1 million)
     await dappToken.transfer(tokenFarm.address, tokens('1000000'));
 
-    // Send some of Mock DAI tokens to investor
-    await daiToken.transfer(investor, tokens('100'), { from: owner });
+    for(let i = 1; i < 10; i++) {
+      await daiToken.transfer(accounts[i], tokens('100'), { from: owner });
+    }
   });
 
   describe('Mock DAI Token deployment', async () => {
@@ -55,7 +57,7 @@ contract('TokenFarm', ([owner, investor]) => {
   });
 
   describe('Farming Dapp tokens', async () => {
-    it('rewards investors for staking Mock DAI tokens', async () => {
+    it('rewards investor for staking Mock DAI tokens', async () => {
       let result;
 
       // Check investor balance before staking
@@ -82,16 +84,6 @@ contract('TokenFarm', ([owner, investor]) => {
       // query all stakers - 1 staker
       result = await tokenFarm.getDaiStakers()
       expect(result).to.have.members([investor]);
-
-      // Issue Tokens
-      await tokenFarm.issueDappTokens({ from: owner });
-
-      // Check balances after issuance
-      result = await dappToken.balanceOf(investor);
-      assert.equal(result.toString(), tokens('100'), 'investor DApp Token wallet balance correct after issuance');
-
-      // Ensure that only owner can issue tokens
-      await tokenFarm.issueDappTokens({ from: investor }).should.be.rejected;
 
       // Unstake tokens
       await tokenFarm.unstakeDaiTokens({ from: investor });
