@@ -15,11 +15,12 @@ module.exports = {
   contracts_build_directory: './src/built-contracts/',
   compilers: {
     solc: {
+      version: "0.8.3",
       optimizer: {
         enabled: true,
         runs: 200
       },
-      evmVersion: 'petersburg'
+      evmVersion: 'byzantium'
     }
   }
 };

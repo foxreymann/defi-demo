@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.0;
 
 import "./DappToken.sol";
 import "./DaiToken.sol";
@@ -13,6 +13,11 @@ contract TokenFarm {
     mapping(address => uint) public stakingBalance;
     mapping(address => bool) public hasStaked;
     mapping(address => bool) public isStaking;
+
+    struct StakerBalance {
+      address staker;
+      uint balance;
+    }
 
     constructor(DappToken _dappToken, DaiToken _daiToken) public {
         dappToken = _dappToken;
@@ -61,5 +66,17 @@ contract TokenFarm {
     function getDaiStakers() public view returns(address[] memory) {
       return stakers;
     }
+/*
+    function getDaiStakersBalance() public view returns(StakerBalance[] memory stakersBalance) {
+      for(uint i = 0; i < stakers.length; i++) {
+        stakersBalance.push(
+          StakerBalance({
+            staker: stakers[i],
+            balance: stakingBalance(stakers[i])
+          })
+        );
+      }
+    }
+*/
 
 }
