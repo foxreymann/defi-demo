@@ -105,51 +105,47 @@ contract('TokenFarm', (accounts) => {
     it('rewards investors for staking Mock DAI tokens', async () => {
       let result;
 
-      // Check investors balance before staking
-      result = await daiToken.balanceOf(investor);
-      assert.equal(result.toString(), tokens('100'), 'investor Mock DAI wallet balance correct before staking');
-
       for(let i = 1; i < 10; i++) {
-        result = await daiToken.balanceOf(accounts[1]);
-        assert.equal(result.toString(), tokens('100'), 'investor Mock DAI wallet balance correct before staking');
+        result = await daiToken.balanceOf(accounts[i]);
+        assert.equal(result.toString(), tokens('100'), 'accounts[i] Mock DAI wallet balance correct before staking');
+
+        // Stake Mock DAI Tokens
+        await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[i] });
+        await tokenFarm.stakeDaiTokens(tokens('100'), { from: accounts[i] });
+
+        // Check staking result
+        result = await daiToken.balanceOf(accounts[i]);
+        assert.equal(result.toString(), tokens('0'), 'accounts[i] Mock DAI wallet balance correct after staking');
+
+        result = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(result.toString(), tokens(100*i + ''), 'Token Farm Mock DAI balance correct after staking');
       }
 /*
-      // Stake Mock DAI Tokens
-      await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
-      await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+      result = await tokenFarm.stakingBalance(accounts[i]);
+      assert.equal(result.toString(), tokens('100'), 'accounts[i] staking balance correct after staking');
 
-      // Check staking result
-      result = await daiToken.balanceOf(investor);
-      assert.equal(result.toString(), tokens('0'), 'investor Mock DAI wallet balance correct after staking');
-
-      result = await daiToken.balanceOf(tokenFarm.address);
-      assert.equal(result.toString(), tokens('100'), 'Token Farm Mock DAI balance correct after staking');
-
-      result = await tokenFarm.stakingBalance(investor);
-      assert.equal(result.toString(), tokens('100'), 'investor staking balance correct after staking');
-
-      result = await tokenFarm.isStaking(investor);
-      assert.equal(result.toString(), 'true', 'investor staking status correct after staking');
+      result = await tokenFarm.isStaking(accounts[i]);
+      assert.equal(result.toString(), 'true', 'accounts[i] staking status correct after staking');
 
       // query all stakers - 1 staker
       result = await tokenFarm.getDaiStakers()
-      expect(result).to.have.members([investor]);
+      expect(result).to.have.members([accounts[i]]);
 
       // Unstake tokens
-      await tokenFarm.unstakeDaiTokens({ from: investor });
+      await tokenFarm.unstakeDaiTokens({ from: accounts[i] });
 
       // Check results after unstaking
-      result = await daiToken.balanceOf(investor);
-      assert.equal(result.toString(), tokens('100'), 'investor Mock DAI wallet balance correct after unstaking');
+      result = await daiToken.balanceOf(accounts[i]);
+      assert.equal(result.toString(), tokens('100'), 'accounts[i] Mock DAI wallet balance correct after unstaking');
 
       result = await daiToken.balanceOf(tokenFarm.address);
       assert.equal(result.toString(), tokens('0'), 'Token Farm Mock DAI balance correct after unstaking');
 
-      result = await tokenFarm.stakingBalance(investor);
-      assert.equal(result.toString(), tokens('0'), 'investor staking balance correct after unstaking');
+      result = await tokenFarm.stakingBalance(accounts[i]);
+      assert.equal(result.toString(), tokens('0'), 'accounts[i] staking balance correct after unstaking');
 
-      result = await tokenFarm.isStaking(investor);
-      assert.equal(result.toString(), 'false', 'investor staking status correct after unstaking');
+      result = await tokenFarm.isStaking(accounts[i]);
+      assert.equal(result.toString(), 'false', 'accounts[i] staking status correct after unstaking');
 */
     });
   });
