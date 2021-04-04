@@ -104,6 +104,7 @@ contract('TokenFarm', (accounts) => {
 
     it('rewards investors for staking Mock DAI tokens', async () => {
       let result;
+      let investors = accounts.slice(1)
 
       for(let i = 1; i < 10; i++) {
         result = await daiToken.balanceOf(accounts[i]);
@@ -119,34 +120,38 @@ contract('TokenFarm', (accounts) => {
 
         result = await daiToken.balanceOf(tokenFarm.address);
         assert.equal(result.toString(), tokens(100*i + ''), 'Token Farm Mock DAI balance correct after staking');
+
+        result = await tokenFarm.stakingBalance(accounts[i]);
+        assert.equal(result.toString(), tokens('100'), 'accounts[i] staking balance correct after staking');
+
+        result = await tokenFarm.isStaking(accounts[i]);
+        assert.equal(result.toString(), 'true', 'accounts[i] staking status correct after staking');
       }
-/*
-      result = await tokenFarm.stakingBalance(accounts[i]);
-      assert.equal(result.toString(), tokens('100'), 'accounts[i] staking balance correct after staking');
 
-      result = await tokenFarm.isStaking(accounts[i]);
-      assert.equal(result.toString(), 'true', 'accounts[i] staking status correct after staking');
-
-      // query all stakers - 1 staker
+      // query all stakers - 9 stakers
       result = await tokenFarm.getDaiStakers()
-      expect(result).to.have.members([accounts[i]]);
+      expect(result).to.have.members(investors);
 
-      // Unstake tokens
-      await tokenFarm.unstakeDaiTokens({ from: accounts[i] });
+      for(let i = 1; i < 10; i++) {
+        // Unstake tokens
+        await tokenFarm.unstakeDaiTokens({ from: accounts[i] });
 
-      // Check results after unstaking
-      result = await daiToken.balanceOf(accounts[i]);
-      assert.equal(result.toString(), tokens('100'), 'accounts[i] Mock DAI wallet balance correct after unstaking');
+        // Check results after unstaking
+        result = await daiToken.balanceOf(accounts[i]);
+        assert.equal(result.toString(), tokens('100'), 'accounts[i] Mock DAI wallet balance correct after unstaking');
 
-      result = await daiToken.balanceOf(tokenFarm.address);
-      assert.equal(result.toString(), tokens('0'), 'Token Farm Mock DAI balance correct after unstaking');
+        result = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(result.toString(), tokens((900 - 100*i) + ''), 'Token Farm Mock DAI balance correct after unstaking');
 
-      result = await tokenFarm.stakingBalance(accounts[i]);
-      assert.equal(result.toString(), tokens('0'), 'accounts[i] staking balance correct after unstaking');
+        result = await tokenFarm.stakingBalance(accounts[i]);
+        assert.equal(result.toString(), tokens('0'), 'accounts[i] staking balance correct after unstaking');
 
-      result = await tokenFarm.isStaking(accounts[i]);
-      assert.equal(result.toString(), 'false', 'accounts[i] staking status correct after unstaking');
-*/
+        result = await tokenFarm.isStaking(accounts[i]);
+        assert.equal(result.toString(), 'false', 'accounts[i] staking status correct after unstaking');
+
+        result = await tokenFarm.hasStaked(accounts[i]);
+        assert.equal(result.toString(), 'true', 'accounts[i] staking status correct after unstaking');
+      }
     });
   });
 });
