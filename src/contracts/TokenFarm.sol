@@ -67,17 +67,19 @@ contract TokenFarm {
     function getDaiStakers() public view returns(address[] memory) {
       return stakers;
     }
-/*
+
     function getDaiStakersBalance() public view returns(StakerBalance[] memory stakersBalance) {
+      uint j = 0;
       for(uint i = 0; i < stakers.length; i++) {
-        stakersBalance.push(
-          StakerBalance({
-            staker: stakers[i],
-            balance: stakingBalance(stakers[i])
-          })
-        );
+        if(stakers[i].isStaking) {
+          stakersBalance[j] =
+            StakerBalance({
+              staker: stakers[i],
+              balance: stakingBalance[stakers[i]]
+            });
+          j++;
+        }
       }
     }
-*/
 
 }
