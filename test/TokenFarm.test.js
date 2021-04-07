@@ -57,6 +57,52 @@ contract('TokenFarm', (accounts) => {
   });
 
   describe('Farming Dapp tokens', async () => {
+    it('shuffle staking', async () => {
+      let result;
+
+      // [1]
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
+      await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+
+      // [1,4]
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[4]});
+      await tokenFarm.stakeDaiTokens(tokens('100'), { from: accounts[4] });
+
+      // [1,4,2]
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[2]});
+      await tokenFarm.stakeDaiTokens(tokens('100'), { from: accounts[2] });
+
+      // [4,2]
+      await tokenFarm.unstakeDaiTokens({ from: investor });
+
+      // [4]
+      await tokenFarm.unstakeDaiTokens({ from: accounts[2] });
+
+      // [4,3]
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[3]});
+      await tokenFarm.stakeDaiTokens(tokens('100'), { from: accounts[3] });
+
+      // [4,3,1]
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
+      await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+
+      // [4,1]
+      await tokenFarm.unstakeDaiTokens({ from: accounts[3] });
+
+      result = await tokenFarm.getDaiStakers()
+      expect(result).to.have.members([accounts[4],investor]);
+
+      result = await tokenFarm.getDaiStakersBalance()
+
+console.log(accounts[4])
+console.log(accounts[1])
+console.log({result})
+
+      await tokenFarm.unstakeDaiTokens({ from: accounts[4] });
+      await tokenFarm.unstakeDaiTokens({ from: accounts[1] });
+
+    });
+
     it('rewards investor for staking Mock DAI tokens', async () => {
       let result;
 
