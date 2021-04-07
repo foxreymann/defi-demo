@@ -55,6 +55,9 @@ contract TokenFarm {
         // Move the last element into the place to delete
         stakers[index] = stakers[stakers.length - 1];
 
+        // update the index
+        stakerIdx[stakers[index]] = index;
+
         // Remove the last element
         stakers.pop();
     }
