@@ -82,6 +82,10 @@ contract TokenFarm {
       return stakers;
     }
 
+    function getDaiStakersLength() public view returns(uint) {
+      return stakers.length;
+    }
+
     function getDaiStakersBalance() public view returns(StakerBalance[] memory) {
       StakerBalance[] memory stakersBalance = new StakerBalance[](stakers.length);
 
