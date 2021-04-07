@@ -12,8 +12,8 @@ contract TokenFarm {
 
     address[] public stakers;
     mapping(address => uint) public stakingBalance;
-    mapping(address => bool) public hasStaked;
     mapping(address => bool) public isStaking;
+    mapping(address => uint) public stakerIdx;
 
     struct StakerBalance {
       address staker;
@@ -37,13 +37,26 @@ contract TokenFarm {
         stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
 
         // Add user to stakers array *only* if they haven't staked already
-        if(!hasStaked[msg.sender]) {
+        if(!isStaking[msg.sender]) {
             stakers.push(msg.sender);
+            stakerIdx[msg.sender] = stakers.length - 1;
+            isStaking[msg.sender] = true;
+        }
+    }
+
+    // Deleting an element creates a gap in the array.
+    // One trick to keep the array compact is to
+    // move the last element into the place to delete.
+    function removeStaker(uint index) public {
+        if(stakers.length < 1 || index > stakers.length -1) {
+          return;
         }
 
-        // Update staking status
-        isStaking[msg.sender] = true;
-        hasStaked[msg.sender] = true;
+        // Move the last element into the place to delete
+        stakers[index] = stakers[stakers.length - 1];
+
+        // Remove the last element
+        stakers.pop();
     }
 
     // Unstaking Tokens (Withdraw)
@@ -62,6 +75,7 @@ contract TokenFarm {
 
         // Update staking status
         isStaking[msg.sender] = false;
+        removeStaker(stakerIdx[msg.sender]);
     }
 
     function getDaiStakers() public view returns(address[] memory) {
@@ -72,12 +86,12 @@ contract TokenFarm {
       StakerBalance[] memory stakersBalance = new StakerBalance[](stakers.length);
 
       for(uint i = 0; i < stakers.length; i++) {
-        if(isStaking[stakers[i]]) {
-          stakersBalance[i] = StakerBalance({
-            staker: stakers[i],
-            balance: stakingBalance[stakers[i]]
-          });
-        }
+        stakersBalance[i] = StakerBalance({
+          staker: stakers[i],
+          balance: stakingBalance[stakers[i]]
+        });
       }
+
+      return stakersBalance;
     }
 }

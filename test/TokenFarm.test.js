@@ -57,7 +57,7 @@ contract('TokenFarm', (accounts) => {
   });
 
   describe('Farming Dapp tokens', async () => {
-    it.only('rewards investor for staking Mock DAI tokens', async () => {
+    it('rewards investor for staking Mock DAI tokens', async () => {
       let result;
 
       // Check investor balance before staking
@@ -67,7 +67,6 @@ contract('TokenFarm', (accounts) => {
       // Stake Mock DAI Tokens
       await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
       await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
-
       // Check staking result
       result = await daiToken.balanceOf(investor);
       assert.equal(result.toString(), tokens('0'), 'investor Mock DAI wallet balance correct after staking');
@@ -87,9 +86,16 @@ contract('TokenFarm', (accounts) => {
 
       // query all stakers - 1 staker
       result = await tokenFarm.getDaiStakersBalance()
+console.log({result})
 
       // Unstake tokens
       await tokenFarm.unstakeDaiTokens({ from: investor });
+
+      result = await tokenFarm.getDaiStakers()
+console.log({result})
+
+      result = await tokenFarm.getDaiStakersBalance()
+console.log({result})
 
       // Check results after unstaking
       result = await daiToken.balanceOf(investor);
@@ -151,9 +157,6 @@ contract('TokenFarm', (accounts) => {
 
         result = await tokenFarm.isStaking(accounts[i]);
         assert.equal(result.toString(), 'false', 'accounts[i] staking status correct after unstaking');
-
-        result = await tokenFarm.hasStaked(accounts[i]);
-        assert.equal(result.toString(), 'true', 'accounts[i] staking status correct after unstaking');
       }
     });
   });
