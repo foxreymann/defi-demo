@@ -57,7 +57,7 @@ contract('TokenFarm', (accounts) => {
   });
 
   describe('Farming Dapp tokens', async () => {
-    it('rewards investor for staking Mock DAI tokens', async () => {
+    it.only('rewards investor for staking Mock DAI tokens', async () => {
       let result;
 
       // Check investor balance before staking
@@ -84,6 +84,9 @@ contract('TokenFarm', (accounts) => {
       // query all stakers - 1 staker
       result = await tokenFarm.getDaiStakers()
       expect(result).to.have.members([investor]);
+
+      // query all stakers - 1 staker
+      result = await tokenFarm.getDaiStakersBalance()
 
       // Unstake tokens
       await tokenFarm.unstakeDaiTokens({ from: investor });
