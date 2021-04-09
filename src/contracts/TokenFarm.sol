@@ -9,6 +9,12 @@ import "./DappToken.sol";
 import "./DaiToken.sol";
 
 contract TokenFarm is Ownable, Pausable {
+
+    event StakingPaused(address account);
+    event StakingUnpaused(address account);
+
+    bool stakingPaused;
+
     string public name = "Dapp Token Farm";
     DappToken public dappToken;
     DaiToken public daiToken;
@@ -26,9 +32,10 @@ contract TokenFarm is Ownable, Pausable {
     constructor(DappToken _dappToken, DaiToken _daiToken) {
         dappToken = _dappToken;
         daiToken = _daiToken;
+        stakingPaused = false;
     }
 
-    function stakeDaiTokens(uint _amount) public whenNotPaused {
+    function stakeDaiTokens(uint _amount) public whenNotPaused whenStakingNotPaused {
         // Require amount greater than 0
         require(_amount > 0, "amount cannot be 0");
 
@@ -117,5 +124,20 @@ contract TokenFarm is Ownable, Pausable {
     // ------------------------------------------------------------------------
     function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
         return IERC20(tokenAddress).transfer(owner(), tokens);
+    }
+
+    function stakingPause() public onlyOwner {
+      stakingPaused = true;
+      emit StakingPaused(msg.sender);
+    }
+
+    function stakingUnpause() public onlyOwner {
+      stakingPaused = false;
+      emit StakingUnpaused(msg.sender);
+    }
+
+    modifier whenStakingNotPaused() {
+        require(!stakingPaused, "Staking Pausable: staking paused");
+        _;
     }
 }
