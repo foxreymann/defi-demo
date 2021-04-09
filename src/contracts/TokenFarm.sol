@@ -2,12 +2,13 @@
 pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/security/Pausable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 import "./DappToken.sol";
 import "./DaiToken.sol";
 
-contract TokenFarm is Ownable{
+contract TokenFarm is Ownable, Pausable {
     string public name = "Dapp Token Farm";
     DappToken public dappToken;
     DaiToken public daiToken;
@@ -27,7 +28,7 @@ contract TokenFarm is Ownable{
         daiToken = _daiToken;
     }
 
-    function stakeDaiTokens(uint _amount) public {
+    function stakeDaiTokens(uint _amount) public whenNotPaused {
         // Require amount greater than 0
         require(_amount > 0, "amount cannot be 0");
 
@@ -48,7 +49,7 @@ contract TokenFarm is Ownable{
     // Deleting an element creates a gap in the array.
     // One trick to keep the array compact is to
     // move the last element into the place to delete.
-    function removeStaker(uint index) public {
+    function removeStaker(uint index) internal {
         if(stakers.length < 1 || index > stakers.length -1) {
           return;
         }
@@ -64,7 +65,7 @@ contract TokenFarm is Ownable{
     }
 
     // Unstaking Tokens (Withdraw)
-    function unstakeDaiTokens() public {
+    function unstakeDaiTokens() public whenNotPaused {
         // Fetch staking balance
         uint balance = stakingBalance[msg.sender];
 
