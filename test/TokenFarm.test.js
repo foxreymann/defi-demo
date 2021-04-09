@@ -1,7 +1,14 @@
-
 const DaiToken = artifacts.require('DaiToken');
 const DappToken = artifacts.require('DappToken');
 const TokenFarm = artifacts.require('TokenFarm');
+
+const {
+  BN,           // Big Number support
+  constants,    // Common constants, like the zero address and largest integers
+  expectEvent,  // Assertions for emitted events
+  expectRevert, // Assertions for transactions that should fail
+  time
+} = require('@openzeppelin/test-helpers');
 
 require('chai')
   .use(require('chai-as-promised'))
@@ -241,5 +248,30 @@ contract('TokenFarm', (accounts) => {
         let finalTokenFarmBal = await daiToken.balanceOf(tokenFarm.address);
         assert.equal(finalTokenFarmBal.toString(), tokens('40'))
     })
+  })
+
+/*
+  describe('Token withdrawal', async () => {
+
+    it('allows to withdraw Mock DAI tokens', async () => {
+        let result;
+        await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
+        await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+
+        let initTokenFarmBal = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(initTokenFarmBal.toString(), tokens('100'))
+
+        await tokenFarm.transferAnyERC20Token(daiToken.address, tokens('60'))
+
+        let finalTokenFarmBal = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(finalTokenFarmBal.toString(), tokens('40'))
+    })
+  })
+*/
+
+  it('rejects ETH deposit', async () => {
+    await expectRevert.unspecified(
+      web3.eth.sendTransaction({to:tokenFarm.address, from:owner, value:tokens('1')})
+    )
   })
 });
