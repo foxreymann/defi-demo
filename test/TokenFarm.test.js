@@ -93,10 +93,9 @@ contract('TokenFarm', (accounts) => {
       expect(result).to.have.members([accounts[4],investor]);
 
       result = await tokenFarm.getDaiStakersBalance()
-
-console.log(accounts[4])
-console.log(accounts[1])
-console.log({result})
+      // test
+      assert.equal(result.length, 2)
+      assert.equal(result[1].staker, investor)
 
       await tokenFarm.unstakeDaiTokens({ from: accounts[4] });
       await tokenFarm.unstakeDaiTokens({ from: accounts[1] });
