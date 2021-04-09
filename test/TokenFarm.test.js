@@ -93,9 +93,11 @@ contract('TokenFarm', (accounts) => {
       expect(result).to.have.members([accounts[4],investor]);
 
       result = await tokenFarm.getDaiStakersBalance()
-      // test
       assert.equal(result.length, 2)
       assert.equal(result[1].staker, investor)
+
+      result = await tokenFarm.getDaiStakersLength()
+      assert.equal(result, 2)
 
       await tokenFarm.unstakeDaiTokens({ from: accounts[4] });
       await tokenFarm.unstakeDaiTokens({ from: accounts[1] });
@@ -194,6 +196,9 @@ contract('TokenFarm', (accounts) => {
       assert.equal(result[0].balance, tokens('100'))
       assert.equal(result[8].staker, accounts[9])
       assert.equal(result[8].balance, tokens('100'))
+
+      result = await tokenFarm.getDaiStakersLength()
+      assert.equal(result, 9)
 
       for(let i = 1; i < 10; i++) {
         // Unstake tokens
