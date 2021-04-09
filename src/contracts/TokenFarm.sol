@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: Copyright
 pragma solidity ^0.8.0;
 
+import '@openzeppelin/contracts/access/Ownable.sol';
+
 import "./DappToken.sol";
 import "./DaiToken.sol";
 
-contract TokenFarm {
+contract TokenFarm is Ownable{
     string public name = "Dapp Token Farm";
-    address public owner;
     DappToken public dappToken;
     DaiToken public daiToken;
 
@@ -23,7 +24,6 @@ contract TokenFarm {
     constructor(DappToken _dappToken, DaiToken _daiToken) {
         dappToken = _dappToken;
         daiToken = _daiToken;
-        owner = msg.sender;
     }
 
     function stakeDaiTokens(uint _amount) public {
