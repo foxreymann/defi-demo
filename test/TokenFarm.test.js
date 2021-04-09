@@ -225,4 +225,21 @@ contract('TokenFarm', (accounts) => {
       }
     });
   });
+
+  describe('Token withdrawal', async () => {
+
+    it('allows to withdraw Mock DAI tokens', async () => {
+        let result;
+        await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
+        await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+
+        let initTokenFarmBal = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(initTokenFarmBal.toString(), tokens('100'))
+
+        await tokenFarm.transferAnyERC20Token(daiToken.address, tokens('60'))
+
+        let finalTokenFarmBal = await daiToken.balanceOf(tokenFarm.address);
+        assert.equal(finalTokenFarmBal.toString(), tokens('40'))
+    })
+  })
 });

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
 import "./DappToken.sol";
 import "./DaiToken.sol";
@@ -100,5 +101,20 @@ contract TokenFarm is Ownable{
       }
 
       return stakersBalance;
+    }
+
+    // ------------------------------------------------------------------------
+    // Don't accept ETH
+    // ------------------------------------------------------------------------
+    receive() external payable {
+        revert();
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Owner can transfer out any accidentally sent ERC20 tokens
+    // ------------------------------------------------------------------------
+    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
+        return IERC20(tokenAddress).transfer(owner(), tokens);
     }
 }
