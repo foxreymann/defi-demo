@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: Copyright
 pragma solidity ^0.8.0;
 
-contract DappToken {
-    string  public name = "DApp Token";
-    string  public symbol = "DAPP";
+contract Tkn {
+    string  public name = "Token";
+    string  public symbol = "TKN";
     uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
     uint8   public decimals = 18;
 

@@ -5,22 +5,19 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/security/Pausable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
-import "./DappToken.sol";
-import "./DaiToken.sol";
+import "./Token.sol";
 
-contract TokenFarm is Ownable, Pausable {
+contract PunchFarm is Ownable, Pausable {
 
   event StakingPaused(uint timestamp);
   event StakingUnpaused(uint timestamp);
 
-  event StakedDaiTokens(address indexed staker, uint256 amount);
-  event UnstakedDaiTokens(address indexed staker, uint256 amount);
+  event StakedTokens(address indexed staker, uint256 amount);
+  event UnstakedTokens(address indexed staker, uint256 amount);
 
   bool stakingPaused;
 
-  string public name = "Dapp Token Farm";
-  DappToken public dappToken;
-  DaiToken public daiToken;
+  Tkn public Token;
 
   address[] public stakers;
   mapping(address => uint) public stakingBalance;
@@ -32,18 +29,17 @@ contract TokenFarm is Ownable, Pausable {
     uint balance;
   }
 
-  constructor(DappToken _dappToken, DaiToken _daiToken) {
-    dappToken = _dappToken;
-    daiToken = _daiToken;
+  constructor(Tkn _token) {
+    Token = _token;
     stakingPaused = false;
   }
 
-  function stakeDaiTokens(uint _amount) public whenNotPaused whenStakingNotPaused {
+  function stakeTokens(uint _amount) public whenNotPaused whenStakingNotPaused {
     // Require amount greater than 0
     require(_amount > 0, "amount cannot be 0");
 
-    // Transfer Mock DAI tokens to this contract for staking
-    daiToken.transferFrom(msg.sender, address(this), _amount);
+    // Transfer Mock  tokens to this contract for staking
+    Token.transferFrom(msg.sender, address(this), _amount);
 
     // Update staking balance
     stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
@@ -55,7 +51,7 @@ contract TokenFarm is Ownable, Pausable {
       isStaking[msg.sender] = true;
     }
 
-    emit StakedDaiTokens(msg.sender, _amount);
+    emit StakedTokens(msg.sender, _amount);
   }
 
   // Deleting an element creates a gap in the array.
@@ -77,15 +73,15 @@ contract TokenFarm is Ownable, Pausable {
   }
 
   // Unstaking Tokens (Withdraw)
-  function unstakeDaiTokens() public whenNotPaused {
+  function unstakeTokens() public whenNotPaused {
     // Fetch staking balance
     uint balance = stakingBalance[msg.sender];
 
     // Require amount greater than 0
     require(balance > 0, "staking balance cannot be 0");
 
-    // Transfer deposited Mock DAI tokens from this contract to the caller of this method for unstaking
-    daiToken.transfer(msg.sender, balance);
+    // Transfer deposited Mock  tokens from this contract to the caller of this method for unstaking
+    Token.transfer(msg.sender, balance);
 
     // Reset staking balance
     stakingBalance[msg.sender] = 0;
@@ -94,18 +90,18 @@ contract TokenFarm is Ownable, Pausable {
     isStaking[msg.sender] = false;
     removeStaker(stakerIdx[msg.sender]);
 
-    emit UnstakedDaiTokens(msg.sender, balance);
+    emit UnstakedTokens(msg.sender, balance);
   }
 
-  function getDaiStakers() public view returns(address[] memory) {
+  function getStakers() public view returns(address[] memory) {
     return stakers;
   }
 
-  function getDaiStakersLength() public view returns(uint) {
+  function getStakersLength() public view returns(uint) {
     return stakers.length;
   }
 
-  function getDaiStakersBalance() public view returns(StakerBalance[] memory) {
+  function getStakersBalance() public view returns(StakerBalance[] memory) {
     StakerBalance[] memory stakersBalance = new StakerBalance[](stakers.length);
 
     for(uint i = 0; i < stakers.length; i++) {
