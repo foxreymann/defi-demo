@@ -69,7 +69,12 @@ contract('TokenFarm', (accounts) => {
 
       // [1]
       await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
-      await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+
+      let web3Receipt = await tokenFarm.stakeDaiTokens(tokens('100'), { from: investor });
+      expectEvent(web3Receipt, 'StakedDaiTokens', {
+        staker: investor,
+        amount: tokens('100')
+      });
 
       // [1,4]
       await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[4]});
@@ -83,7 +88,11 @@ contract('TokenFarm', (accounts) => {
       await tokenFarm.unstakeDaiTokens({ from: investor });
 
       // [4]
-      await tokenFarm.unstakeDaiTokens({ from: accounts[2] });
+      web3Receipt = await tokenFarm.unstakeDaiTokens({ from: accounts[2] });
+      expectEvent(web3Receipt, 'UnstakedDaiTokens', {
+        staker: accounts[2],
+        amount: tokens('100')
+      });
 
       // [4,3]
       await daiToken.approve(tokenFarm.address, tokens('100'), { from: accounts[3]});
