@@ -217,11 +217,10 @@ contract('PunchFarm', (accounts) => {
         let result;
         await token.approve(farm.address, tokens('100'), { from: investor });
         await farm.stakeTokens(tokens('100'), { from: investor });
-
         let initTokenFarmBal = await token.balanceOf(farm.address);
         assert.equal(initTokenFarmBal.toString(), tokens('100'))
 
-        await farm.transferAnyERC20Token(Token.address, tokens('60'))
+        await farm.transferAnyERC20Token(token.address, tokens('60'))
 
         let finalTokenFarmBal = await token.balanceOf(farm.address);
         assert.equal(finalTokenFarmBal.toString(), tokens('40'))
