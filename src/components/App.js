@@ -29,7 +29,7 @@ const App = () => {
 
   const [daiToken, setPunchToken] = React.useState(null);
   const [dappToken, setLPToken] = React.useState(null);
-  const [tokenFarm, setPunchFarm] = React.useState(null);
+  const [punchFarm, setPunchFarm] = React.useState(null);
 
   const [daiTokenBalance, setPunchTokenBalance] = React.useState('0');
   const [dappTokenBalance, setLPTokenBalance] = React.useState('0');
@@ -77,9 +77,9 @@ const App = () => {
       }
 
       // Load PunchFarm
-      const tokenFarmData = PunchFarm.networks[networkId];
-      if(tokenFarmData) {
-        const thePunchFarm = new web3.eth.Contract(PunchFarm.abi, tokenFarmData.address);
+      const punchFarmData = PunchFarm.networks[networkId];
+      if(punchFarmData) {
+        const thePunchFarm = new web3.eth.Contract(PunchFarm.abi, punchFarmData.address);
         setPunchFarm(thePunchFarm);
         const theStakingBalance = await thePunchFarm.methods.stakingBalance(firstAccount).call();
         setStakingBalance(theStakingBalance);
@@ -97,10 +97,10 @@ const App = () => {
     try {
       setLoading(true);
       await daiToken.methods
-        .approve(tokenFarm._address, amount)
+        .approve(punchFarm._address, amount)
         .send({ from: account });
-      await tokenFarm.methods
-        .stakePunchTokens(amount)
+      await punchFarm.methods
+        .stakeTokens(amount)
         .send({ from: account });
 
       handlePunchTokenDataChange();
@@ -116,8 +116,8 @@ const App = () => {
   const handleUnstakePunchTokens = async () => {
     try {
       setLoading(true);
-      await tokenFarm.methods
-        .unstakePunchTokens()
+      await punchFarm.methods
+        .unstakeTokens()
         .send({ from: account });
       
       handlePunchTokenDataChange();
@@ -150,7 +150,7 @@ const App = () => {
 
   const handlePunchFarmDataChange = async () => {
     try {
-      const theStakingBalance = await tokenFarm.methods.stakingBalance(account).call();
+      const theStakingBalance = await punchFarm.methods.stakingBalance(account).call();
       setStakingBalance(theStakingBalance.toString());
     } catch (error) {
       console.log('[handlePunchFarmDataChange] error.message => ', error.message);
