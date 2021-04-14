@@ -13,8 +13,8 @@ module.exports = async function(deployer, network, accounts) {
   } else {
     await deployer.deploy(Tkn);
     const  tkn = await Tkn.deployed();
-    punchAddress = tkn.address()
-    lpAddress = tkn.address()
+    punchAddress = tkn.address
+    lpAddress = tkn.address
   }
 
 
