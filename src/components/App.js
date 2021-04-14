@@ -27,12 +27,12 @@ const loadWeb3 = async () => {
 const App = () => {
   const [account, setAccount] = React.useState('0x0');
 
-  const [daiToken, setPunchToken] = React.useState(null);
-  const [dappToken, setLPToken] = React.useState(null);
+  const [punchToken, setPunchToken] = React.useState(null);
+  const [lpToken, setLPToken] = React.useState(null);
   const [punchFarm, setPunchFarm] = React.useState(null);
 
-  const [daiTokenBalance, setPunchTokenBalance] = React.useState('0');
-  const [dappTokenBalance, setLPTokenBalance] = React.useState('0');
+  const [punchTokenBalance, setPunchTokenBalance] = React.useState('0');
+  const [lpTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
@@ -55,9 +55,9 @@ const App = () => {
       const networkId = await web3.eth.net.getId();
 
       // Load PunchToken
-      const daiTokenData = PunchToken.networks[networkId];
-      if(daiTokenData) {
-        const thePunchToken = new web3.eth.Contract(PunchToken.abi, daiTokenData.address);
+      const punchTokenData = PunchToken.networks[networkId];
+      if(punchTokenData) {
+        const thePunchToken = new web3.eth.Contract(PunchToken.abi, punchTokenData.address);
         setPunchToken(thePunchToken);
         const thePunchTokenBalance = await thePunchToken.methods.balanceOf(firstAccount).call();
         setPunchTokenBalance(thePunchTokenBalance.toString());
@@ -66,9 +66,9 @@ const App = () => {
       }
 
       // Load LPToken
-      const dappTokenData = LPToken.networks[networkId];
-      if(dappTokenData) {
-        const theLPToken = new web3.eth.Contract(LPToken.abi, dappTokenData.address);
+      const lpTokenData = LPToken.networks[networkId];
+      if(lpTokenData) {
+        const theLPToken = new web3.eth.Contract(LPToken.abi, lpTokenData.address);
         setLPToken(theLPToken);
         const theLPTokenBalance = await theLPToken.methods.balanceOf(firstAccount).call();
         setLPTokenBalance(theLPTokenBalance);
@@ -96,7 +96,7 @@ const App = () => {
   const handleStakePunchTokens = async amount => {
     try {
       setLoading(true);
-      await daiToken.methods
+      await punchToken.methods
         .approve(punchFarm._address, amount)
         .send({ from: account });
       await punchFarm.methods
@@ -132,7 +132,7 @@ const App = () => {
 
   const handlePunchTokenDataChange = async () => {
     try {
-      const thePunchTokenBalance = await daiToken.methods.balanceOf(account).call();
+      const thePunchTokenBalance = await punchToken.methods.balanceOf(account).call();
       setPunchTokenBalance(thePunchTokenBalance.toString());
     } catch (error) {
       console.log('[handlePunchTokenDataChange] error.message => ', error.message);
@@ -141,7 +141,7 @@ const App = () => {
 
   const handleLPTokenDataChange = async () => {
     try {
-      const theLPTokenBalance = await dappToken.methods.balanceOf(account).call();
+      const theLPTokenBalance = await lpToken.methods.balanceOf(account).call();
       setLPTokenBalance(theLPTokenBalance.toString());
     } catch (error) {
       console.log('[handleLPTokenDataChange] error.message => ', error.message);
@@ -163,8 +163,8 @@ const App = () => {
   } else {
     content = (
       <Main
-        daiTokenBalance={daiTokenBalance}
-        dappTokenBalance={dappTokenBalance}
+        punchTokenBalance={punchTokenBalance}
+        lpTokenBalance={lpTokenBalance}
         stakingBalance={stakingBalance}
         stakePunchTokens={handleStakePunchTokens}
         unstakePunchTokens={handleUnstakePunchTokens} />

@@ -4,10 +4,10 @@ import React from 'react';
 import dai from '../dai.png';
 
 const Main = ({
-  stakingBalance,
-  dappTokenBalance,
+ stakingBalance,
+  lpTokenBalance,
   stakePunchTokens,
-  daiTokenBalance,
+  punchTokenBalance,
   unstakePunchTokens
 }) => {
   const inputRef = React.useRef(null);
@@ -39,7 +39,7 @@ const Main = ({
         <tbody>
           <tr>
             <td>{window.web3.utils.fromWei(stakingBalance, 'Ether')} mDAI</td>
-            <td>{window.web3.utils.fromWei(dappTokenBalance, 'Ether')} DAPP</td>
+            <td>{window.web3.utils.fromWei(lpTokenBalance, 'Ether')} DAPP</td>
           </tr>
         </tbody>
       </table>
@@ -55,7 +55,7 @@ const Main = ({
                 </b>
               </label>
               <span className="float-right text-muted">
-                Balance (at my wallet): {window.web3.utils.fromWei(daiTokenBalance, 'Ether')}
+                Balance (at my wallet): {window.web3.utils.fromWei(punchTokenBalance, 'Ether')}
               </span>
             </div>
             <div className="input-group mb-4">
