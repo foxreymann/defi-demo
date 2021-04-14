@@ -2,9 +2,9 @@
 import React from 'react';
 import Web3 from 'web3';
 
-import DaiToken from '../built-contracts/DaiToken.json';
-import DappToken from '../built-contracts/DappToken.json';
-import TokenFarm from '../built-contracts/TokenFarm.json';
+import PunchToken from '../built-contracts/Punch.json';
+import LPToken from '../built-contracts/LP.json';
+import PunchFarm from '../built-contracts/PunchFarm.json';
 import Navbar from './Navbar';
 import Main from './Main';
 import './App.css';
@@ -27,12 +27,12 @@ const loadWeb3 = async () => {
 const App = () => {
   const [account, setAccount] = React.useState('0x0');
 
-  const [daiToken, setDaiToken] = React.useState(null);
-  const [dappToken, setDappToken] = React.useState(null);
-  const [tokenFarm, setTokenFarm] = React.useState(null);
+  const [daiToken, setPunchToken] = React.useState(null);
+  const [dappToken, setLPToken] = React.useState(null);
+  const [tokenFarm, setPunchFarm] = React.useState(null);
 
-  const [daiTokenBalance, setDaiTokenBalance] = React.useState('0');
-  const [dappTokenBalance, setDappTokenBalance] = React.useState('0');
+  const [daiTokenBalance, setPunchTokenBalance] = React.useState('0');
+  const [dappTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
@@ -54,37 +54,37 @@ const App = () => {
 
       const networkId = await web3.eth.net.getId();
 
-      // Load DaiToken
-      const daiTokenData = DaiToken.networks[networkId];
+      // Load PunchToken
+      const daiTokenData = PunchToken.networks[networkId];
       if(daiTokenData) {
-        const theDaiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address);
-        setDaiToken(theDaiToken);
-        const theDaiTokenBalance = await theDaiToken.methods.balanceOf(firstAccount).call();
-        setDaiTokenBalance(theDaiTokenBalance.toString());
+        const thePunchToken = new web3.eth.Contract(PunchToken.abi, daiTokenData.address);
+        setPunchToken(thePunchToken);
+        const thePunchTokenBalance = await thePunchToken.methods.balanceOf(firstAccount).call();
+        setPunchTokenBalance(thePunchTokenBalance.toString());
       } else {
-        window.alert('DaiToken contract not deployed to detected network.');
+        window.alert('PunchToken contract not deployed to detected network.');
       }
 
-      // Load DappToken
-      const dappTokenData = DappToken.networks[networkId];
+      // Load LPToken
+      const dappTokenData = LPToken.networks[networkId];
       if(dappTokenData) {
-        const theDappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address);
-        setDappToken(theDappToken);
-        const theDappTokenBalance = await theDappToken.methods.balanceOf(firstAccount).call();
-        setDappTokenBalance(theDappTokenBalance);
+        const theLPToken = new web3.eth.Contract(LPToken.abi, dappTokenData.address);
+        setLPToken(theLPToken);
+        const theLPTokenBalance = await theLPToken.methods.balanceOf(firstAccount).call();
+        setLPTokenBalance(theLPTokenBalance);
       } else {
-        window.alert('DappToken contract not deployed to detected network.');
+        window.alert('LPToken contract not deployed to detected network.');
       }
 
-      // Load TokenFarm
-      const tokenFarmData = TokenFarm.networks[networkId];
+      // Load PunchFarm
+      const tokenFarmData = PunchFarm.networks[networkId];
       if(tokenFarmData) {
-        const theTokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address);
-        setTokenFarm(theTokenFarm);
-        const theStakingBalance = await theTokenFarm.methods.stakingBalance(firstAccount).call();
+        const thePunchFarm = new web3.eth.Contract(PunchFarm.abi, tokenFarmData.address);
+        setPunchFarm(thePunchFarm);
+        const theStakingBalance = await thePunchFarm.methods.stakingBalance(firstAccount).call();
         setStakingBalance(theStakingBalance);
       } else {
-        window.alert('TokenFarm contract not deployed to detected network.');
+        window.alert('PunchFarm contract not deployed to detected network.');
       }
     } catch (error) {
       console.log('[handleLoadBlockchainData] error.message => ', error.message);
@@ -93,19 +93,19 @@ const App = () => {
     }
   };
 
-  const handleStakeDaiTokens = async amount => {
+  const handleStakePunchTokens = async amount => {
     try {
       setLoading(true);
       await daiToken.methods
         .approve(tokenFarm._address, amount)
         .send({ from: account });
       await tokenFarm.methods
-        .stakeDaiTokens(amount)
+        .stakePunchTokens(amount)
         .send({ from: account });
 
-      handleDaiTokenDataChange();
-      handleDappTokenDataChange();
-      handleTokenFarmDataChange();
+      handlePunchTokenDataChange();
+      handleLPTokenDataChange();
+      handlePunchFarmDataChange();
     } catch (error) {
       console.log('[handleStakeTokens] error.message => ', error.message);
     } finally {
@@ -113,16 +113,16 @@ const App = () => {
     }
   };
 
-  const handleUnstakeDaiTokens = async () => {
+  const handleUnstakePunchTokens = async () => {
     try {
       setLoading(true);
       await tokenFarm.methods
-        .unstakeDaiTokens()
+        .unstakePunchTokens()
         .send({ from: account });
       
-      handleDaiTokenDataChange();
-      handleDappTokenDataChange();
-      handleTokenFarmDataChange();
+      handlePunchTokenDataChange();
+      handleLPTokenDataChange();
+      handlePunchFarmDataChange();
     } catch (error) {
       console.log('[handleUnstakeTokens] error.message => ', error.message);
     } finally {
@@ -130,30 +130,30 @@ const App = () => {
     }
   };
 
-  const handleDaiTokenDataChange = async () => {
+  const handlePunchTokenDataChange = async () => {
     try {
-      const theDaiTokenBalance = await daiToken.methods.balanceOf(account).call();
-      setDaiTokenBalance(theDaiTokenBalance.toString());
+      const thePunchTokenBalance = await daiToken.methods.balanceOf(account).call();
+      setPunchTokenBalance(thePunchTokenBalance.toString());
     } catch (error) {
-      console.log('[handleDaiTokenDataChange] error.message => ', error.message);
+      console.log('[handlePunchTokenDataChange] error.message => ', error.message);
     }
   };
 
-  const handleDappTokenDataChange = async () => {
+  const handleLPTokenDataChange = async () => {
     try {
-      const theDappTokenBalance = await dappToken.methods.balanceOf(account).call();
-      setDappTokenBalance(theDappTokenBalance.toString());
+      const theLPTokenBalance = await dappToken.methods.balanceOf(account).call();
+      setLPTokenBalance(theLPTokenBalance.toString());
     } catch (error) {
-      console.log('[handleDappTokenDataChange] error.message => ', error.message);
+      console.log('[handleLPTokenDataChange] error.message => ', error.message);
     }
   };
 
-  const handleTokenFarmDataChange = async () => {
+  const handlePunchFarmDataChange = async () => {
     try {
       const theStakingBalance = await tokenFarm.methods.stakingBalance(account).call();
       setStakingBalance(theStakingBalance.toString());
     } catch (error) {
-      console.log('[handleTokenFarmDataChange] error.message => ', error.message);
+      console.log('[handlePunchFarmDataChange] error.message => ', error.message);
     }
   };
 
@@ -166,8 +166,8 @@ const App = () => {
         daiTokenBalance={daiTokenBalance}
         dappTokenBalance={dappTokenBalance}
         stakingBalance={stakingBalance}
-        stakeDaiTokens={handleStakeDaiTokens}
-        unstakeDaiTokens={handleUnstakeDaiTokens} />
+        stakePunchTokens={handleStakePunchTokens}
+        unstakePunchTokens={handleUnstakePunchTokens} />
     );
   }
 
