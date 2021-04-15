@@ -2,6 +2,7 @@
 import React from 'react';
 
 import dai from '../dai.png';
+import punch from '../punch.png';
 
 const Main = ({
  stakingBalance,
@@ -38,8 +39,14 @@ const Main = ({
         </thead>
         <tbody>
           <tr>
-            <td>{window.web3.utils.fromWei(stakingBalance, 'Ether')} PUNCH</td>
-            <td>{window.web3.utils.fromWei(lpTokenBalance, 'Ether')} PUNCH LP TOKEN</td>
+            <td>
+              <img src={punch} height="32"/>
+              {window.web3.utils.fromWei(punchTokenBalance, 'Ether')}
+            </td>
+            <td>
+              <img src={punch} height="32"/>
+              {window.web3.utils.fromWei(stakingBalance, 'Ether')}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -48,16 +55,6 @@ const Main = ({
           <form
             className="mb-3"
             onSubmit={handleSubmit}>
-            <div>
-              <label className="float-left">
-                <b>
-                  Stake Tokens
-                </b>
-              </label>
-              <span className="float-right text-muted">
-                Balance (at my wallet): {window.web3.utils.fromWei(punchTokenBalance, 'Ether')}
-              </span>
-            </div>
             <div className="input-group mb-4">
               <input
                 type="text"
@@ -67,11 +64,7 @@ const Main = ({
                 required />
               <div className="input-group-append">
                 <div className="input-group-text">
-                  <img
-                    src={dai}
-                    height="32"
-                    alt="" />
-                  &nbsp;&nbsp;&nbsp; PUNCH
+                  $PUNCH
                 </div>
               </div>
             </div>
