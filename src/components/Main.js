@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import dai from '../dai.png';
+import ttswap from '../ttswap.png';
 import punch from '../punch.png';
 
 const Main = ({
@@ -29,7 +29,8 @@ const Main = ({
   return (
     <div
       id="content"
-      className="mt-3">
+      className="mt-3 text-muted">
+      <h4>$PUNCH <img src={punch} height='32' /> Staking</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
@@ -40,11 +41,9 @@ const Main = ({
         <tbody>
           <tr>
             <td>
-              <img src={punch} height="32"/>
               {window.web3.utils.fromWei(punchTokenBalance, 'Ether')}
             </td>
             <td>
-              <img src={punch} height="32"/>
               {window.web3.utils.fromWei(stakingBalance, 'Ether')}
             </td>
           </tr>
@@ -56,17 +55,17 @@ const Main = ({
             className="mb-3"
             onSubmit={handleSubmit}>
             <div className="input-group mb-4">
+              <div className="input-group-prepend">
+                <div className="input-group-text">
+                  <img src={punch} height="32" />
+                </div>
+              </div>
               <input
                 type="text"
                 ref={inputRef}
                 className="form-control form-control-lg"
                 placeholder="0"
                 required />
-              <div className="input-group-append">
-                <div className="input-group-text">
-                  $PUNCH
-                </div>
-              </div>
             </div>
             <button
               type="submit"
@@ -81,6 +80,10 @@ const Main = ({
           </button>
         </div>
       </div>
+      <hr />
+      <hr />
+      <hr />
+      <h4><img src={ttswap} height='32' /> Liqudity Staking</h4>
     </div>
   );
 };
