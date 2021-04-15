@@ -6,6 +6,7 @@ import punch from '../punch.png';
 
 const Main = ({
  stakingBalance,
+ lpStakingBalance,
   lpTokenBalance,
   stakePunchTokens,
   punchTokenBalance,
@@ -84,6 +85,24 @@ const Main = ({
       <hr />
       <hr />
       <h4><img src={ttswap} height='32' /> Liqudity Staking</h4>
+      <table className="table table-borderless text-muted text-center">
+        <thead>
+          <tr>
+            <th scope="col">Wallet $PUNCH LP</th>
+            <th scope="col">Staked $PUNCH LP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {window.web3.utils.fromWei(lpTokenBalance, 'Ether')}
+            </td>
+            <td>
+              {window.web3.utils.fromWei(lpStakingBalance, 'Ether')}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

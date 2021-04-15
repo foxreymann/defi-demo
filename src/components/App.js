@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import PunchToken from '../built-contracts/Punch.json';
 import LPToken from '../built-contracts/LP.json';
 import PunchFarm from '../built-contracts/PunchFarm.json';
+import LPFarm from '../built-contracts/LPFarm.json';
 import Navbar from './Navbar';
 import Main from './Main';
 import './App.css';
@@ -30,10 +31,12 @@ const App = () => {
   const [punchToken, setPunchToken] = React.useState(null);
   const [lpToken, setLPToken] = React.useState(null);
   const [punchFarm, setPunchFarm] = React.useState(null);
+  const [lpFarm, setLPFarm] = React.useState(null);
 
   const [punchTokenBalance, setPunchTokenBalance] = React.useState('0');
   const [lpTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
+  const [lpStakingBalance, setLPStakingBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
 
@@ -85,6 +88,17 @@ const App = () => {
         setStakingBalance(theStakingBalance);
       } else {
         window.alert('PunchFarm contract not deployed to detected network.');
+      }
+
+      // Load LPFarm
+      const lpFarmData = LPFarm.networks[networkId];
+      if(lpFarmData) {
+        const theLPFarm = new web3.eth.Contract(LPFarm.abi, lpFarmData.address);
+        setLPFarm(theLPFarm);
+        const theLPStakingBalance = await theLPFarm.methods.stakingBalance(firstAccount).call();
+        setLPStakingBalance(theLPStakingBalance);
+      } else {
+        window.alert('LPFarm contract not deployed to detected network.');
       }
     } catch (error) {
       console.log('[handleLoadBlockchainData] error.message => ', error.message);
@@ -166,6 +180,7 @@ const App = () => {
         punchTokenBalance={punchTokenBalance}
         lpTokenBalance={lpTokenBalance}
         stakingBalance={stakingBalance}
+        lpStakingBalance={lpStakingBalance}
         stakePunchTokens={handleStakePunchTokens}
         unstakePunchTokens={handleUnstakePunchTokens} />
     );
