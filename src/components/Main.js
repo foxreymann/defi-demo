@@ -32,8 +32,8 @@ const Main = ({
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
-            <th scope="col">Staking Balance (at Token Farm)</th>
-            <th scope="col">Reward Balance (at my wallet)</th>
+            <th scope="col">Wallet $PUNCH</th>
+            <th scope="col">Staked $PUNCH</th>
           </tr>
         </thead>
         <tbody>
