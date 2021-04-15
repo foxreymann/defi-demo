@@ -118,8 +118,26 @@ const App = () => {
         .send({ from: account });
 
       handlePunchTokenDataChange();
-      handleLPTokenDataChange();
       handlePunchFarmDataChange();
+    } catch (error) {
+      console.log('[handleStakeTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStakeLPTokens = async amount => {
+    try {
+      setLoading(true);
+      await lpToken.methods
+        .approve(lpFarm._address, amount)
+        .send({ from: account });
+      await lpFarm.methods
+        .stakeTokens(amount)
+        .send({ from: account });
+
+      handleLPTokenDataChange();
+      handleLPFarmDataChange();
     } catch (error) {
       console.log('[handleStakeTokens] error.message => ', error.message);
     } finally {
@@ -133,12 +151,27 @@ const App = () => {
       await punchFarm.methods
         .unstakeTokens()
         .send({ from: account });
-      
+
       handlePunchTokenDataChange();
-      handleLPTokenDataChange();
       handlePunchFarmDataChange();
     } catch (error) {
       console.log('[handleUnstakeTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnstakeLPTokens = async () => {
+    try {
+      setLoading(true);
+      await lpFarm.methods
+        .unstakeTokens()
+        .send({ from: account });
+
+      handleLPTokenDataChange();
+      handleLPFarmDataChange();
+    } catch (error) {
+      console.log('[handleUnstakeLPTokens] error.message => ', error.message);
     } finally {
       setLoading(false);
     }
@@ -153,21 +186,30 @@ const App = () => {
     }
   };
 
-  const handleLPTokenDataChange = async () => {
-    try {
-      const theLPTokenBalance = await lpToken.methods.balanceOf(account).call();
-      setLPTokenBalance(theLPTokenBalance.toString());
-    } catch (error) {
-      console.log('[handleLPTokenDataChange] error.message => ', error.message);
-    }
-  };
-
   const handlePunchFarmDataChange = async () => {
     try {
       const theStakingBalance = await punchFarm.methods.stakingBalance(account).call();
       setStakingBalance(theStakingBalance.toString());
     } catch (error) {
       console.log('[handlePunchFarmDataChange] error.message => ', error.message);
+    }
+  };
+
+  const handleLPFarmDataChange = async () => {
+    try {
+      const theLPStakingBalance = await lpFarm.methods.stakingBalance(account).call();
+      setLPStakingBalance(theLPStakingBalance.toString());
+    } catch (error) {
+      console.log('[handleLPFarmDataChange] error.message => ', error.message);
+    }
+  };
+
+  const handleLPTokenDataChange = async () => {
+    try {
+      const theLPTokenBalance = await lpToken.methods.balanceOf(account).call();
+      setLPTokenBalance(theLPTokenBalance.toString());
+    } catch (error) {
+      console.log('[handleLPTokenDataChange] error.message => ', error.message);
     }
   };
 
