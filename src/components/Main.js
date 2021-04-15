@@ -38,8 +38,8 @@ const Main = ({
         </thead>
         <tbody>
           <tr>
-            <td>{window.web3.utils.fromWei(stakingBalance, 'Ether')} mDAI</td>
-            <td>{window.web3.utils.fromWei(lpTokenBalance, 'Ether')} DAPP</td>
+            <td>{window.web3.utils.fromWei(stakingBalance, 'Ether')} PUNCH</td>
+            <td>{window.web3.utils.fromWei(lpTokenBalance, 'Ether')} PUNCH LP TOKEN</td>
           </tr>
         </tbody>
       </table>
@@ -71,7 +71,7 @@ const Main = ({
                     src={dai}
                     height="32"
                     alt="" />
-                  &nbsp;&nbsp;&nbsp; mDAI
+                  &nbsp;&nbsp;&nbsp; PUNCH
                 </div>
               </div>
             </div>
