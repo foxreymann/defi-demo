@@ -23,10 +23,6 @@ const Main = ({
     stakePunchTokens(amount);
   };
 
-  const handleUnstakeClick = () => {
-    unstakePunchTokens();
-  };
-
   return (
     <div
       id="content"
@@ -76,7 +72,7 @@ const Main = ({
           </form>
           <button
             className="btn btn-link btn-block btn-sm"
-            onClick={handleUnstakeClick}>
+            onClick={unstakePunchTokens}>
             UN-STAKE...
           </button>
         </div>
@@ -103,6 +99,39 @@ const Main = ({
           </tr>
         </tbody>
       </table>
+
+      <div className="card mb-4" >
+        <div className="card-body">
+          <form
+            className="mb-3"
+            onSubmit={handleSubmit}>
+            <div className="input-group mb-4">
+              <div className="input-group-prepend">
+                <div className="input-group-text">
+                  <img src={punch} height="32" />
+                </div>
+              </div>
+              <input
+                type="text"
+                ref={inputRef}
+                className="form-control form-control-lg"
+                placeholder="0"
+                required />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary btn-block btn-lg">
+              STAKE!
+            </button>
+          </form>
+          <button
+            className="btn btn-link btn-block btn-sm"
+            onClick={handleSubmit}>
+            UN-STAKE...
+          </button>
+        </div>
+      </div>
+
     </div>
   );
 };
