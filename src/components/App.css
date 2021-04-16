@@ -11,3 +11,14 @@ table td {
 h4 {
   text-align: center;
 }
+
+.multibutton {
+  position: relative;
+}
+
+.multibutton img {
+  position: absolute;
+  height: 120%;
+  right: 5px;
+  top: -10%;
+}

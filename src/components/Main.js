@@ -3,6 +3,7 @@ import React from 'react';
 
 import ttswap from '../ttswap.png';
 import punch from '../punch.png';
+import m2x from '../icon-2x.svg';
 
 const Main = ({
  stakingBalance,
@@ -10,7 +11,6 @@ const Main = ({
   lpTokenBalance,
   stakePunchTokens,
   stakeLPTokens,
-
   punchTokenBalance,
   unstakePunchTokens,
   unstakeLPTokens,
@@ -122,6 +122,7 @@ const Main = ({
               <div className="input-group-prepend">
                 <div className="input-group-text">
                   <img src={punch} height="32" />
+                  <img src={ttswap} height='20' />
                 </div>
               </div>
               <input
@@ -133,8 +134,9 @@ const Main = ({
             </div>
             <button
               type="submit"
-              className="btn btn-primary btn-block btn-lg">
+              className="btn btn-primary btn-block btn-lg multibutton">
               STAKE!
+              <img src={m2x} />
             </button>
           </form>
           <button
