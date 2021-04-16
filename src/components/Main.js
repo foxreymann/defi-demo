@@ -9,10 +9,14 @@ const Main = ({
  lpStakingBalance,
   lpTokenBalance,
   stakePunchTokens,
+  stakeLPTokens,
+
   punchTokenBalance,
-  unstakePunchTokens
+  unstakePunchTokens,
+  unstakeLPTokens,
 }) => {
   const inputRef = React.useRef(null);
+  const lpInputRef = React.useRef(null);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -21,6 +25,15 @@ const Main = ({
     amount = inputRef.current.value.toString();
     amount = window.web3.utils.toWei(amount, 'Ether');
     stakePunchTokens(amount);
+  };
+
+  const handleLPSubmit = event => {
+    event.preventDefault();
+
+    let amount;
+    amount = lpInputRef.current.value.toString();
+    amount = window.web3.utils.toWei(amount, 'Ether');
+    stakeLPTokens(amount);
   };
 
   return (
@@ -104,7 +117,7 @@ const Main = ({
         <div className="card-body">
           <form
             className="mb-3"
-            onSubmit={handleSubmit}>
+            onSubmit={handleLPSubmit}>
             <div className="input-group mb-4">
               <div className="input-group-prepend">
                 <div className="input-group-text">
@@ -113,7 +126,7 @@ const Main = ({
               </div>
               <input
                 type="text"
-                ref={inputRef}
+                ref={lpInputRef}
                 className="form-control form-control-lg"
                 placeholder="0"
                 required />
@@ -126,7 +139,7 @@ const Main = ({
           </form>
           <button
             className="btn btn-link btn-block btn-sm"
-            onClick={handleSubmit}>
+            onClick={unstakeLPTokens}>
             UN-STAKE...
           </button>
         </div>

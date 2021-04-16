@@ -221,10 +221,14 @@ const App = () => {
       <Main
         punchTokenBalance={punchTokenBalance}
         lpTokenBalance={lpTokenBalance}
+
         stakingBalance={stakingBalance}
         lpStakingBalance={lpStakingBalance}
+
         stakePunchTokens={handleStakePunchTokens}
-        unstakePunchTokens={handleUnstakePunchTokens} />
+        stakeLPTokens={handleStakeLPTokens}
+        unstakePunchTokens={handleUnstakePunchTokens}
+        unstakeLPTokens={handleUnstakeLPTokens} />
     );
   }
 
