@@ -148,6 +148,12 @@ const Main = ({
         </div>
       </div>
 
+      <a className='float-right' href='https://ttswap.space/#/add-liquidity'>
+        <button>
+          Add <img src={punch} height="32" /> <img src={ttswap} height='20' /> Liqudity
+        </button>
+      </a>
+
     </div>
   );
 };
