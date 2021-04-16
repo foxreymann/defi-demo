@@ -93,7 +93,8 @@ const Main = ({
       <hr />
       <hr />
       <hr />
-      <h4><img src={ttswap} height='32' /> Liqudity Staking</h4>
+      <h4><img src={ttswap} height='32' /> Liqudity Staking&nbsp;<img src={m2x} height='32'/>
+      </h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
