@@ -240,7 +240,7 @@ const App = () => {
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
             <div className="content mr-auto ml-auto">
 <div class="alert alert-danger text-center mt-3" role="alert">
-🛈  Dividends are not being distributed yet 🛈
+ℹ️ Dividends are not being distributed yet ℹ️
 </div>
               <hr />
               <hr />
