@@ -22,7 +22,6 @@ contract Allowances is Ownable, Pausable {
   mapping (address => Allowance) public addressToAllowance;
 
   address[] public stakers;
-  mapping(address => bool) public isStaking;
   mapping(address => uint) public stakerIdx;
 
   address public bot;
@@ -41,17 +40,18 @@ contract Allowances is Ownable, Pausable {
 
   function distribute(
     AllowanceParams[] memory _allowanceParams
-  ) public onlyOwner {
+  ) public onlyOwnerOrBot {
     uint allowanceParamsLen = _allowanceParams.length;
     address player;
+    uint value;
 
     for(uint i = 0; i < allowanceParamsLen; i++) {
       player = _allowanceParams[i].player;
+      value = _allowanceParams[i].value;
 
-      if(!isStaking[player]) {
+      if(!value) {
         stakers.push(player);
         stakerIdx[player] = stakers.length - 1;
-        isStaking[player] = true;
 
         addressToAllowance[player] = Allowance({
           value: _allowanceParams[i].value,
@@ -64,7 +64,6 @@ contract Allowances is Ownable, Pausable {
         addressToAllowance[player].added = block.timestamp;
       }
     }
-
   }
 
   // *** WITHDRAW
