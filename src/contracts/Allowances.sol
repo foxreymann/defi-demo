@@ -49,7 +49,7 @@ contract Allowances is Ownable, Pausable {
       player = _allowanceParams[i].player;
       value = _allowanceParams[i].value;
 
-      if(!value) {
+      if(value == 0) {
         stakers.push(player);
         stakerIdx[player] = stakers.length - 1;
 
@@ -78,7 +78,6 @@ contract Allowances is Ownable, Pausable {
     addressToAllowance[msg.sender].removed = block.timestamp;
 
     removeStaker(stakerIdx[msg.sender]);
-    isStaking[msg.sender] = false;
     payable(msg.sender).transfer(amount);
 
     emit Removed(msg.sender, amount, tx.gasprice);
@@ -104,7 +103,6 @@ contract Allowances is Ownable, Pausable {
     addressToAllowance[_player].value = 0;
     addressToAllowance[_player].removed = block.timestamp;
     removeStaker(stakerIdx[msg.sender]);
-    isStaking[msg.sender] = false;
 
     payable(msg.sender).transfer(amount);
 
