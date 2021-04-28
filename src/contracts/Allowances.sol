@@ -13,6 +13,11 @@ contract Allowances is Ownable, Pausable {
     uint removed;
   }
 
+  struct AllowanceParams {
+    address player;
+    uint value;
+  }
+
   // to get all addresses look as scores list
   mapping (address => Allowance) public addressToAllowance;
 
@@ -34,6 +39,34 @@ contract Allowances is Ownable, Pausable {
 
   receive() external payable {}
 
+  function distribute(
+    AllowanceParams[] memory _allowanceParams
+  ) public onlyOwner {
+    uint allowanceParamsLen = _allowanceParams.length;
+    address player;
+
+    for(uint i = 0; i < allowanceParamsLen; i++) {
+      player = _allowanceParams[i].player;
+
+      if(!isStaking[player]) {
+        stakers.push(player);
+        stakerIdx[player] = stakers.length - 1;
+        isStaking[player] = true;
+
+        addressToAllowance[player] = Allowance({
+          value: _allowanceParams[i].value,
+          added: block.timestamp,
+          removed: 0
+        });
+      } else {
+        // add allowance
+        addressToAllowance[player].value += _allowanceParams[i].value;
+        addressToAllowance[player].added = block.timestamp;
+      }
+    }
+
+  }
+
   // *** WITHDRAW
   function withdraw() public whenNotPaused {
 
@@ -44,7 +77,9 @@ contract Allowances is Ownable, Pausable {
 
     addressToAllowance[msg.sender].value = 0;
     addressToAllowance[msg.sender].removed = block.timestamp;
+
     removeStaker(stakerIdx[msg.sender]);
+    isStaking[msg.sender] = false;
     payable(msg.sender).transfer(amount);
 
     emit Removed(msg.sender, amount, tx.gasprice);
@@ -70,6 +105,7 @@ contract Allowances is Ownable, Pausable {
     addressToAllowance[_player].value = 0;
     addressToAllowance[_player].removed = block.timestamp;
     removeStaker(stakerIdx[msg.sender]);
+    isStaking[msg.sender] = false;
 
     payable(msg.sender).transfer(amount);
 
