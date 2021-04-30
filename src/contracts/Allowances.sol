@@ -49,7 +49,7 @@ contract Allowances is Ownable, Pausable {
       player = _allowanceParams[i].player;
       value = _allowanceParams[i].value;
 
-      if(value == 0) {
+      if(addressToAllowance[player].value == 0) {
         stakers.push(player);
         stakerIdx[player] = stakers.length - 1;
 
@@ -131,6 +131,10 @@ contract Allowances is Ownable, Pausable {
     if(bot != _bot) {
       bot = _bot;
     }
+  }
+
+  function getStakersLength() public view returns(uint) {
+    return stakers.length;
   }
 
   // ------------------------------------------------------------------------
