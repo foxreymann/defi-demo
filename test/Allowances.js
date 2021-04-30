@@ -100,11 +100,25 @@ contract('Allowances', (accounts) => {
 
     for(let i = 2; i < 10; i++) {
       await allowances.withdraw({from:accounts[i]})
+
+      result = await allowances.getStakersLength()
+      assert.equal(result, 8 - (i -1))
+
+      result = (await allowances.addressToAllowance(accounts[i])).value
+      assert.equal(result.toString(), '0')
     }
 
     // contract eth balance should be 1
     result = await web3.eth.getBalance(allowances.address)
     assert.equal(result.toString(), web3.utils.toWei(1+''))
+
+    // full withdrawal
+    await allowances.fullWithdrawal()
+
+    // contract eth balance should be 1
+    result = await web3.eth.getBalance(allowances.address)
+    assert.equal(result.toString(), '0')
+
   })
 
 /*
