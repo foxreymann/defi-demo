@@ -63,6 +63,8 @@ contract Allowances is Ownable, Pausable {
         addressToAllowance[player].value += _allowanceParams[i].value;
         addressToAllowance[player].added = block.timestamp;
       }
+
+      emit Added(player, value);
     }
   }
 

@@ -123,6 +123,48 @@ contract('Allowances', (accounts) => {
 
   })
 
+  it('test owner withdrawal', async () => {
+    const params = []
+    let dividends = 0
+
+    for(let i = 2; i < 10; i++) {
+      params.push({
+        player: accounts[i],
+        value: web3.utils.toWei(i+'')
+      })
+      dividends+=i
+    }
+
+    await allowances.distribute(params)
+    await allowances.distribute(params)
+    dividends*=2
+
+    // supply cash to the contract so players can withdraw
+    await web3.eth.sendTransaction({
+      from: owner,
+      to: allowances.address,
+      value: web3.utils.toWei(dividends+'')
+    })
+
+    result = await web3.eth.getBalance(allowances.address)
+    assert.equal(result.toString(), web3.utils.toWei(dividends+''))
+
+    for(let i = 2; i < 10; i++) {
+      await allowances.ownerWithdraw(accounts[i])
+
+      result = await allowances.getStakersLength()
+      assert.equal(result, 8 - (i -1))
+
+      result = (await allowances.addressToAllowance(accounts[i])).value
+      assert.equal(result.toString(), '0')
+    }
+
+    // contract eth balance should be 1
+    result = await web3.eth.getBalance(allowances.address)
+    assert.equal(result.toString(), '0')
+
+  })
+
 /*
   describe('Farming Dapp tokens', async () => {
     it('shuffle staking', async () => {
