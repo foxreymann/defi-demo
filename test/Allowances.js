@@ -112,6 +112,8 @@ contract('Allowances', (accounts) => {
     result = await web3.eth.getBalance(allowances.address)
     assert.equal(result.toString(), web3.utils.toWei(1+''))
 
+    await allowances.pause()
+
     // full withdrawal
     await allowances.fullWithdrawal()
 

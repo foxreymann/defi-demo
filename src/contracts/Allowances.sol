@@ -144,4 +144,12 @@ contract Allowances is Ownable, Pausable {
     return IERC20(tokenAddress).transfer(owner(), tokens);
   }
 
+  function pause() external onlyOwner whenNotPaused {
+    _pause();
+  }
+
+  function unpause() external onlyOwner whenPaused {
+    _unpause();
+  }
+
 }
