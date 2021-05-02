@@ -4,6 +4,7 @@ import React from 'react';
 import ttswap from '../ttswap.png';
 import punch from '../punch.png';
 import m2x from '../icon-2x.svg';
+import Currency from './Currency';
 
 const Main = ({
   allowanceBalance,
@@ -15,6 +16,7 @@ const Main = ({
   punchTokenBalance,
   unstakePunchTokens,
   unstakeLPTokens,
+  withdraw
 }) => {
   const inputRef = React.useRef(null);
   const lpInputRef = React.useRef(null);
@@ -40,10 +42,10 @@ const Main = ({
   return (
     <div id="content" className="mt-3 text-muted">
       <h4>Dividends</h4>
-      {window.web3.utils.fromWei(allowanceBalance, 'Ether')}
+      <h4><Currency amount={allowanceBalance}/></h4>
       <button
-        type="submit"
-        className="btn btn-primary btn-block btn-lg">
+        className="btn btn-primary btn-block btn-lg"
+        onClick={withdraw}>
         WITHDRAW
       </button>
 

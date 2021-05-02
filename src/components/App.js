@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Web3 from 'web3';
 
@@ -119,6 +118,20 @@ const App = () => {
     }
   };
 
+  const handleWithdraw = async amount => {
+    try {
+      setLoading(true);
+      await allowances.methods
+        .withdraw()
+        .send({ from: account });
+      handleAllowanceDataChange();
+    } catch (error) {
+      console.log('[handleStakeTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleStakePunchTokens = async amount => {
     try {
       setLoading(true);
@@ -225,6 +238,15 @@ const App = () => {
     }
   };
 
+  const handleAllowanceDataChange = async () => {
+    try {
+      const theAllowanceBalance = (await allowances.methods.addressToAllowance(account).call()).value
+      setAllowanceBalance(theAllowanceBalance.toString());
+    } catch (error) {
+      console.log('[handleLPTokenDataChange] error.message => ', error.message);
+    }
+  };
+
   let content;
   if(loading) {
     content = <p id="loader" className="text-center">Loading...</p>;
@@ -233,6 +255,8 @@ const App = () => {
       <Main
         punchTokenBalance={punchTokenBalance}
         lpTokenBalance={lpTokenBalance}
+
+        withdraw={handleWithdraw}
 
         allowanceBalance={allowanceBalance}
 
@@ -253,9 +277,6 @@ const App = () => {
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
             <div className="content mr-auto ml-auto">
-              <hr />
-              <hr />
-              <hr />
               {content}
             </div>
           </main>
