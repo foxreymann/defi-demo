@@ -6,6 +6,7 @@ import PunchToken from '../built-contracts/Punch.json';
 import LPToken from '../built-contracts/LP.json';
 import PunchFarm from '../built-contracts/PunchFarm.json';
 import LPFarm from '../built-contracts/LPFarm.json';
+import Allowances from '../built-contracts/Allowances.json';
 import Navbar from './Navbar';
 import Main from './Main';
 import './App.css';
@@ -32,11 +33,15 @@ const App = () => {
   const [lpToken, setLPToken] = React.useState(null);
   const [punchFarm, setPunchFarm] = React.useState(null);
   const [lpFarm, setLPFarm] = React.useState(null);
+  const [allowances, setAllowances] = React.useState(null);
 
   const [punchTokenBalance, setPunchTokenBalance] = React.useState('0');
   const [lpTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
   const [lpStakingBalance, setLPStakingBalance] = React.useState('0');
+
+  const [allowanceBalance, setAllowanceBalance] = React.useState('0');
+  const [walletBalance, setWalletBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
 
@@ -56,6 +61,14 @@ const App = () => {
       setAccount(firstAccount);
 
       const networkId = await web3.eth.net.getId();
+
+      const allowanceData = Allowances.networks[networkId]
+      if(allowanceData) {
+        const theAllowances = new web3.eth.Contract(Allowances.abi, allowanceData.address);
+        setAllowances(theAllowances)
+        const theAllowanceBalance = (await theAllowances.methods.addressToAllowance(firstAccount).call()).value
+        setAllowanceBalance(theAllowanceBalance.toString());
+      }
 
       // Load PunchToken
       const punchTokenData = PunchToken.networks[networkId];
@@ -222,6 +235,9 @@ const App = () => {
         punchTokenBalance={punchTokenBalance}
         lpTokenBalance={lpTokenBalance}
 
+        allowanceBalance={allowanceBalance}
+        walletBalance={walletBalance}
+
         stakingBalance={stakingBalance}
         lpStakingBalance={lpStakingBalance}
 
@@ -239,9 +255,6 @@ const App = () => {
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
             <div className="content mr-auto ml-auto">
-<div class="alert alert-danger text-center mt-3" role="alert">
-ℹ️ℹ️ℹ️<br />You can stake but dividends are not being distributed yet
-</div>
               <hr />
               <hr />
               <hr />
