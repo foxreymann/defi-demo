@@ -7,7 +7,6 @@ import m2x from '../icon-2x.svg';
 
 const Main = ({
   allowanceBalance,
-  walletBalance,
  stakingBalance,
  lpStakingBalance,
   lpTokenBalance,
@@ -41,26 +40,12 @@ const Main = ({
   return (
     <div id="content" className="mt-3 text-muted">
       <h4>Dividends</h4>
-      <table className="table table-borderless text-muted text-center">
-        <thead>
-          <tr>
-            <th scope="col">
-              {window.web3.utils.fromWei(allowanceBalance, 'Ether')}
-            </th>
-            <th scope="col">Wallet</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              WITHDRAW
-            </td>
-            <td>
-              {window.web3.utils.fromWei(stakingBalance, 'Ether')}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {window.web3.utils.fromWei(allowanceBalance, 'Ether')}
+      <button
+        type="submit"
+        className="btn btn-primary btn-block btn-lg">
+        WITHDRAW
+      </button>
 
       <hr />
       <hr />

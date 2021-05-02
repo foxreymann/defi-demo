@@ -41,7 +41,6 @@ const App = () => {
   const [lpStakingBalance, setLPStakingBalance] = React.useState('0');
 
   const [allowanceBalance, setAllowanceBalance] = React.useState('0');
-  const [walletBalance, setWalletBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
 
@@ -236,7 +235,6 @@ const App = () => {
         lpTokenBalance={lpTokenBalance}
 
         allowanceBalance={allowanceBalance}
-        walletBalance={walletBalance}
 
         stakingBalance={stakingBalance}
         lpStakingBalance={lpStakingBalance}
