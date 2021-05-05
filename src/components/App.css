@@ -37,3 +37,15 @@ h4 {
     padding-left: 22px;
     font-family: Arial;
 }
+
+/* Tokenomics */
+
+.progress {
+  height: 5rem;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+}
+
+.progress .bg-warning {
+  color: #050505;
+}
