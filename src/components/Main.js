@@ -54,6 +54,7 @@ const Main = ({
               Treasury<br/>84000
             </div>
           </div>
+          <p>Total supply: 100k $PUNCH</p>
         </div>
         <div className="mt-2">
           <h5>Token burn process:</h5>
@@ -79,6 +80,14 @@ const Main = ({
               Burned<br/>60000
             </div>
           </div>
+          <p>Total supply: 40k $PUNCH</p>
+        </div>
+        <div className="mt-2">
+          <h5>Burn date:</h5>
+          {new Date('2021-05-06').toLocaleString(
+            navigator.language,
+            { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+          )}
         </div>
       </div>
 
