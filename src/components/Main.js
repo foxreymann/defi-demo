@@ -42,10 +42,10 @@ const Main = ({
   return (
     <div id="content" className="mt-3 text-muted">
 
-      <div className="alert alert-secondary" role="alert">
-        <h4>Tokenomics  Token Burn</h4>
-        <div>
-          <h6>Current tokennomics:</h6>
+      <div className="alert alert-secondary tokenomics" role="alert">
+        <h4>🔥 Tokenomics & Token Burn 🔥</h4>
+        <div className="mt-2">
+          <h5>Current tokennomics:</h5>
           <div className="progress">
             <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '18%'}}>
               Circulating<br/>supply<br/>16000
@@ -55,20 +55,28 @@ const Main = ({
             </div>
           </div>
         </div>
-        <div>
-          <h6>Token burn process:</h6>
+        <div className="mt-2">
+          <h5>Token burn process:</h5>
+          <ol class="list-group">
+            <li class="list-group-item">
+              Burn 59800 $PUNCH from the treasury
+            </li>
+            <li class="list-group-item">
+              Burn 200 $PUNCH from TTSwap liqudity
+            </li>
+          </ol>
         </div>
-        <div>
-          <h6>New tokennomics:</h6>
+        <div className="mt-2">
+          <h5>New tokennomics:</h5>
           <div className="progress">
             <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '16%'}}>
               Circulating<br/>supply<br/>15800
             </div>
-            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '14%'}}>
-              Treasury<br/>13200
+            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '24%'}}>
+              Treasury<br/>24200
             </div>
-            <div className="progress-bar progress-bar-striped bg-secondary" role="progressbar" style={{width: '70%'}}>
-              Burned<br/>70000
+            <div className="progress-bar progress-bar-striped bg-secondary" role="progressbar" style={{width: '60%'}}>
+              Burned<br/>60000
             </div>
           </div>
         </div>
@@ -203,7 +211,7 @@ const Main = ({
       <hr/>
       <hr/>
       <div className="alert alert-secondary" role="alert">
-<h4>How dividends work?</h4>
+<h4>ℹ️ How dividends work ℹ️</h4>
 
 <p>Everytime someone takes over in Punchline (pays 20TT) 16TT goes to the prize pool, 1TT goes for  v1 refund and 3TT goes to dividends pool. The dividends will be shared and distributed weekly (at random) to $PUNCH and $PUNCH LP holders (2x) who have those staked.</p>
 
