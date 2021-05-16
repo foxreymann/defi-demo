@@ -42,55 +42,6 @@ const Main = ({
   return (
     <div id="content" className="mt-3 text-muted">
 
-      <div className="alert alert-secondary tokenomics" role="alert">
-        <h4>🔥 Tokenomics & Token Burn 🔥</h4>
-        <div className="mt-2">
-          <h5>Current tokennomics:</h5>
-          <div className="progress">
-            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '18%'}}>
-              Circulating<br/>supply<br/>16000
-            </div>
-            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '82%'}}>
-              Treasury<br/>84000
-            </div>
-          </div>
-          <p>Total supply: 100k $PUNCH</p>
-        </div>
-        <div className="mt-2">
-          <h5>Token burn process:</h5>
-          <ol class="list-group">
-            <li class="list-group-item">
-              Burn 59800 $PUNCH from the treasury
-            </li>
-            <li class="list-group-item">
-              Burn 200 $PUNCH from TTSwap liqudity
-            </li>
-          </ol>
-        </div>
-        <div className="mt-2">
-          <h5>New tokennomics:</h5>
-          <div className="progress">
-            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '16%'}}>
-              Circulating<br/>supply<br/>15800
-            </div>
-            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '24%'}}>
-              Treasury<br/>24200
-            </div>
-            <div className="progress-bar progress-bar-striped bg-secondary" role="progressbar" style={{width: '60%'}}>
-              Burned<br/>60000
-            </div>
-          </div>
-          <p>Total supply: 40k $PUNCH</p>
-        </div>
-        <div className="mt-2">
-          <h5>Burn date:</h5>
-          {new Date('2021-05-06').toLocaleString(
-            navigator.language,
-            { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-          )}
-        </div>
-      </div>
-
       <h4>Dividends</h4>
       <h4><Currency amount={allowanceBalance}/></h4>
       <button
