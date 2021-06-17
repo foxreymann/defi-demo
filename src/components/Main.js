@@ -173,7 +173,7 @@ const Main = ({
       <div className="alert alert-secondary" role="alert">
 <h4>ℹ️ How dividends work ℹ️</h4>
 
-<p>Everytime someone takes over in Punchline (pays 20TT) 16TT goes to the prize pool, 1TT goes for  v1 refund and 3TT goes to dividends pool. The dividends will be shared and distributed weekly (at random) to $PUNCH and $PUNCH LP holders (2x) who have those staked.</p>
+<p>Everytime someone takes over in Punchline (pays 20TT) 16TT goes to the prize pool, 4TT goes to dividends pool. The dividends will be shared and distributed few times per week (at random) to $PUNCH and $PUNCH LP holders who have those staked.</p>
 
 <p>So think of owning $PUNCH just like owning company stocks whereas you get a share of the sites profits propotionally to your staked holdings.</p>
       </div>
