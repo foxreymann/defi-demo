@@ -3,7 +3,7 @@ import React from 'react';
 
 import ttswap from '../ttswap.png';
 import punch from '../punch.png';
-import m4x from '../icon-4x.png';
+import m6x from '../icon-6x.png';
 import Currency from './Currency';
 
 const Main = ({
@@ -106,7 +106,7 @@ const Main = ({
       <hr />
       <hr />
       <hr />
-      <h4><img src={ttswap} height='32' /> Liqudity Staking&nbsp;<img src={m4x} height='80' style={{ 'padding-bottom': '10px'}} />
+      <h4><img src={ttswap} height='32' /> Liqudity Staking&nbsp;<img src={m6x} height='80' style={{ 'padding-bottom': '10px'}} />
       </h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
@@ -150,7 +150,7 @@ const Main = ({
               type="submit"
               className="btn btn-primary btn-block btn-lg multibutton">
               STAKE!
-              <img src={m4x} />
+              <img src={m6x} />
             </button>
           </form>
           <button
@@ -173,7 +173,7 @@ const Main = ({
       <div className="alert alert-secondary" role="alert">
 <h4>ℹ️ How dividends work ℹ️</h4>
 
-<p>Everytime someone takes over in Punchline (pays 20TT) 16TT goes to the prize pool, 4TT goes to dividends pool. The dividends will be shared and distributed few times per week (at random) to $PUNCH and $PUNCH LP holders who have those staked.</p>
+<p>Everytime someone takes over in Punchline (pays 21TT) 18TT goes to the prize pool, 3TT goes to dividends pool. The dividends will be shared and distributed few times per week (at random) to $PUNCH and $PUNCH LP holders who have those staked.</p>
 
 <p>So think of owning $PUNCH just like owning company stocks whereas you get a share of the sites profits propotionally to your staked holdings.</p>
       </div>
