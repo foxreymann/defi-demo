@@ -41,7 +41,6 @@ const Main = ({
 
   return (
     <div id="content" className="mt-3 text-muted">
-
       <h4>Dividends</h4>
       <h4><Currency amount={allowanceBalance}/></h4>
       <button
@@ -176,6 +175,28 @@ const Main = ({
 <p>Everytime someone takes over in Punchline (pays 21TT) 18TT goes to the prize pool, 3TT goes to dividends pool. The dividends will be shared and distributed few times per week (at random) to $PUNCH and $PUNCH LP holders who have those staked.</p>
 
 <p>So think of owning $PUNCH just like owning company stocks whereas you get a share of the sites profits propotionally to your staked holdings.</p>
+      </div>
+
+      <div className="alert alert-secondary tokenomics" role="alert">
+        <h4>🔥 Tokenomics & Token Burn 🔥</h4>
+        <div className="mt-2">
+          <h5>Tokenomics:</h5>
+          <div className="progress">
+            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '50%'}}>
+              Circulating<br/>supply<br/>14300
+            </div>
+            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '50%'}}>
+              Treasury<br/>14300
+            </div>
+          </div>
+          <p>Total supply: 28600 $PUNCH</p>
+        </div>
+        <div className="mt-2">
+          <h5>Token burn process:</h5>
+          <p>
+            Burnt tokens have been sent to a smart contract located at <a href='https://viewblock.io/thundercore/address/0x87298c4cf47bc12af5c31ad669da966afd33b109'>0x87298c4cf47bc12af5c31ad669da966afd33b109</a>. This contract has <a href='https://viewblock.io/thundercore/tx/0xb508caf19ca210ab4a0e058de123f7e6de41c65d2911b82e05644f2a1de415c3'>self destruct</a> what means no tokens can ever be withdrawn from it.
+          </p>
+        </div>
       </div>
 
 
