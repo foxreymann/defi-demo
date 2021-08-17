@@ -194,7 +194,7 @@ const Main = ({
         <div className="mt-2">
           <h5>Token burn process:</h5>
           <p>
-            Burnt tokens have been sent to a smart contract located at <a href='https://viewblock.io/thundercore/address/0x87298c4cf47bc12af5c31ad669da966afd33b109'>0x87298c4cf47bc12af5c31ad669da966afd33b109</a>. This contract has <a href='https://viewblock.io/thundercore/tx/0xb508caf19ca210ab4a0e058de123f7e6de41c65d2911b82e05644f2a1de415c3'>self destruct</a> what means no tokens can ever be withdrawn from it.
+            Burnt tokens have been sent to a smart contract located at <a href='https://viewblock.io/thundercore/address/0x87298c4cf47bc12af5c31ad669da966afd33b109'>0x87298c4cf47bc12af5c31ad669da966afd33b109</a>. This contract has <a href='https://viewblock.io/thundercore/tx/0xb508caf19ca210ab4a0e058de123f7e6de41c65d2911b82e05644f2a1de415c3'>self destruct</a> what means no tokens can ever be withdrawn from it!
           </p>
         </div>
       </div>
