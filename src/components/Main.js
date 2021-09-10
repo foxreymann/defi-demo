@@ -178,7 +178,7 @@ const Main = ({
       </div>
 
       <div className="alert alert-secondary tokenomics" role="alert">
-        <h4>🔥 Tokenomics & Token Burn 🔥</h4>
+        <h4>🔥 Tokenomics 🔥</h4>
         <div className="mt-2">
           <h5>Tokenomics:</h5>
           <div className="progress">
@@ -191,6 +191,14 @@ const Main = ({
           </div>
           <p>Total supply: 28600 $PUNCH</p>
         </div>
+
+        <div className="mt-2">
+          <h5>Maximum supply:</h5>
+          <p>
+            No more $PUNCH tokens can be minted, so Total Supply equals Maximum Supply so there will always be only 28600 $PUNCH
+          </p>
+        </div>
+
         <div className="mt-2">
           <h5>Token burn process:</h5>
           <p>
