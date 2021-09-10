@@ -182,11 +182,11 @@ const Main = ({
         <div className="mt-2">
           <h5>Tokenomics:</h5>
           <div className="progress">
-            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '50%'}}>
-              Circulating<br/>supply<br/>14300
+            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{width: '53%'}}>
+              Circulating<br/>supply<br/>15300
             </div>
-            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '50%'}}>
-              Treasury<br/>14300
+            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" style={{width: '47%'}}>
+              Farming<br/>13300
             </div>
           </div>
           <p>Total supply: 28600 $PUNCH</p>
