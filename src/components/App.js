@@ -6,6 +6,7 @@ import LPToken from '../built-contracts/LP.json';
 import PunchFarm from '../built-contracts/PunchFarm.json';
 import LPFarm from '../built-contracts/LPFarm.json';
 import Allowances from '../built-contracts/Allowances.json';
+import MasterThunder from '../built-contracts/MasterThunder.json';
 import Navbar from './Navbar';
 import Main from './Main';
 import './App.css';
@@ -32,14 +33,17 @@ const App = () => {
   const [lpToken, setLPToken] = React.useState(null);
   const [punchFarm, setPunchFarm] = React.useState(null);
   const [lpFarm, setLPFarm] = React.useState(null);
+  const [masterThunder, setMasterThunder] = React.useState(null);
   const [allowances, setAllowances] = React.useState(null);
 
   const [punchTokenBalance, setPunchTokenBalance] = React.useState('0');
   const [lpTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
   const [lpStakingBalance, setLPStakingBalance] = React.useState('0');
+  const [masterStakingBalance, setMasterStakingBalance] = React.useState('0');
 
   const [allowanceBalance, setAllowanceBalance] = React.useState('0');
+  const [masterHarvestBalance, setMasterHarvestBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
 
@@ -111,6 +115,20 @@ const App = () => {
       } else {
         window.alert('LPFarm contract not deployed to detected network.');
       }
+
+      // Load MasterThunder
+      const masterThunderData = MasterThunder.networks[networkId];
+      if(masterThunderData) {
+        const theMasterThunder = new web3.eth.Contract(MasterThunder.abi, masterThunderData.address);
+        setMasterThunder(theMasterThunder);
+        const theMasterStakingBalance = (await theMasterThunder.methods.userInfo('0', firstAccount).call()).amount;
+        setMasterStakingBalance(theMasterStakingBalance);
+console.log({theMasterStakingBalance})
+      } else {
+        window.alert('MasterThunder contract not deployed to detected network.');
+      }
+
+
     } catch (error) {
       console.log('[handleLoadBlockchainData] error.message => ', error.message);
     } finally {
@@ -125,6 +143,20 @@ const App = () => {
         .withdraw()
         .send({ from: account });
       handleAllowanceDataChange();
+    } catch (error) {
+      console.log('[handleStakeTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMasterHarvest = async () => {
+    try {
+      setLoading(true);
+      await masterThunder.methods
+        .deposit('0', '0')
+        .send({ from: account });
+      handleMasterHarvestDataChange();
     } catch (error) {
       console.log('[handleStakeTokens] error.message => ', error.message);
     } finally {
@@ -170,6 +202,25 @@ const App = () => {
     }
   };
 
+  const handleStakeMasterTokens = async amount => {
+    try {
+      setLoading(true);
+      await lpToken.methods
+        .approve(masterThunder._address, amount)
+        .send({ from: account });
+      await masterThunder.methods
+        .deposit('0', amount)
+        .send({ from: account });
+
+      handleLPTokenDataChange();
+      handleMasterThunderDataChange();
+    } catch (error) {
+      console.log('[handleStakeMasterTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleUnstakePunchTokens = async () => {
     try {
       setLoading(true);
@@ -202,6 +253,22 @@ const App = () => {
     }
   };
 
+  const handleUnstakeMasterTokens = async amount => {
+    try {
+      setLoading(true);
+      await masterThunder.methods
+        .withdraw('0', amount)
+        .send({ from: account });
+
+      handleLPTokenDataChange();
+      handleMasterThunderDataChange();
+    } catch (error) {
+      console.log('[handleUnstakeMasterTokens] error.message => ', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePunchTokenDataChange = async () => {
     try {
       const thePunchTokenBalance = await punchToken.methods.balanceOf(account).call();
@@ -217,6 +284,15 @@ const App = () => {
       setStakingBalance(theStakingBalance.toString());
     } catch (error) {
       console.log('[handlePunchFarmDataChange] error.message => ', error.message);
+    }
+  };
+
+  const handleMasterThunderDataChange = async () => {
+    try {
+      const theMasterStakingBalance = (await masterThunder.methods.userPool('0', account).call()).amount;
+      setMasterStakingBalance(theMasterStakingBalance.toString());
+    } catch (error) {
+      console.log('[handleMasterThunderDataChange] error.message => ', error.message);
     }
   };
 
@@ -247,6 +323,15 @@ const App = () => {
     }
   };
 
+  const handleMasterHarvestDataChange = async () => {
+    try {
+      const theMasterHarvestBalance = (await allowances.methods.pendinPunch('0', account).call())
+      setMasterHarvestBalance(theMasterHarvestBalance.toString());
+    } catch (error) {
+      console.log('[handleMasterHarvestDataChange] error.message => ', error.message);
+    }
+  };
+
   let content;
   if(loading) {
     content = <p id="loader" className="text-center">Loading...</p>;
@@ -257,15 +342,21 @@ const App = () => {
         lpTokenBalance={lpTokenBalance}
 
         withdraw={handleWithdraw}
+        masterHarvest={handleMasterHarvest}
 
         allowanceBalance={allowanceBalance}
+        masterHarvestBalance={masterHarvestBalance}
 
         stakingBalance={stakingBalance}
         lpStakingBalance={lpStakingBalance}
+        masterStakingBalance={masterStakingBalance}
 
         stakePunchTokens={handleStakePunchTokens}
         stakeLPTokens={handleStakeLPTokens}
+        stakeMasterTokens={handleStakeMasterTokens}
+
         unstakePunchTokens={handleUnstakePunchTokens}
+        unstakeMasterTokens={handleUnstakeMasterTokens}
         unstakeLPTokens={handleUnstakeLPTokens} />
     );
   }
