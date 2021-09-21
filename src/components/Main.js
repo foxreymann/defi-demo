@@ -125,7 +125,7 @@ const Main = ({
           </form>
           <button
             className="btn btn-link btn-block btn-sm"
-            onClick={unstakeMasterTokens}>
+            onClick={() => unstakeMasterTokens(masterStakingBalance)}>
             UN-STAKE...
           </button>
         </div>

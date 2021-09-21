@@ -260,8 +260,8 @@ console.log({theMasterStakingBalance})
         .withdraw('0', amount)
         .send({ from: account });
 
-      handleLPTokenDataChange();
       handleMasterThunderDataChange();
+      handleLPTokenDataChange();
     } catch (error) {
       console.log('[handleUnstakeMasterTokens] error.message => ', error.message);
     } finally {
@@ -289,7 +289,7 @@ console.log({theMasterStakingBalance})
 
   const handleMasterThunderDataChange = async () => {
     try {
-      const theMasterStakingBalance = (await masterThunder.methods.userPool('0', account).call()).amount;
+      const theMasterStakingBalance = (await masterThunder.methods.userInfo('0', account).call()).amount;
       setMasterStakingBalance(theMasterStakingBalance.toString());
     } catch (error) {
       console.log('[handleMasterThunderDataChange] error.message => ', error.message);
