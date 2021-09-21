@@ -12,7 +12,7 @@ const Navbar = ({ account }) => (
         height="30"
         className="d-inline-block align-top"
         alt="" />
-      &nbsp; Punchline Dividends
+      &nbsp; 0xPunchline Farm & Dividends
     </p>
     <ul className="navbar-nav px-3">
       <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
