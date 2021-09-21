@@ -7,6 +7,14 @@ import lp from '../lp.png';
 import m8x from '../icon-8x.png';
 import Currency from './Currency';
 
+const round = amount => {
+    amount = amount + ''
+    if(amount && amount.includes &&  amount.includes('.')) {
+      amount = amount.substring(0, amount.indexOf('.') + 3)
+    }
+    return amount
+}
+
 const Main = ({
   allowanceBalance,
   masterHarvestBalance,
@@ -84,7 +92,7 @@ const Main = ({
       <hr />
 
       <h4><img src={lp} height='32' /> Farm</h4>
-      <h4>APY: {apy}%</h4>
+      <h4>APY: {round(apy)}%</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
