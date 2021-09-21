@@ -36,6 +36,8 @@ const App = () => {
   const [masterThunder, setMasterThunder] = React.useState(null);
   const [allowances, setAllowances] = React.useState(null);
 
+  const [apy, setApy] = React.useState(null);
+
   const [punchTokenBalance, setPunchTokenBalance] = React.useState('0');
   const [lpTokenBalance, setLPTokenBalance] = React.useState('0');
   const [stakingBalance, setStakingBalance] = React.useState('0');
@@ -123,7 +125,20 @@ const App = () => {
         setMasterThunder(theMasterThunder);
         const theMasterStakingBalance = (await theMasterThunder.methods.userInfo('0', firstAccount).call()).amount;
         setMasterStakingBalance(theMasterStakingBalance);
-console.log({theMasterStakingBalance})
+
+        const theMasterHarvestBalance = (await theMasterThunder.methods.pendingPunch('0', firstAccount).call())
+        setMasterHarvestBalance(theMasterHarvestBalance.toString());
+
+        // calculate apy
+//        const punchPerBlock = web3.utils.fromWei(await theMasterThunder.methods.punchPerBlock().call())
+        const punchPerBlock = '0.002'
+        const punchPerYear = punchPerBlock * 3600 * 24 * 365
+        const theLPToken = new web3.eth.Contract(LPToken.abi, lpTokenData.address);
+        const masterStaked = web3.utils.fromWei(await theLPToken.methods.balanceOf(theMasterThunder._address).call())
+        const apy = punchPerYear / masterStaked * 50
+console.log({apy})
+        setApy(apy)
+
       } else {
         window.alert('MasterThunder contract not deployed to detected network.');
       }
@@ -325,7 +340,7 @@ console.log({theMasterStakingBalance})
 
   const handleMasterHarvestDataChange = async () => {
     try {
-      const theMasterHarvestBalance = (await allowances.methods.pendinPunch('0', account).call())
+      const theMasterHarvestBalance = (await masterThunder.methods.pendingPunch('0', account).call())
       setMasterHarvestBalance(theMasterHarvestBalance.toString());
     } catch (error) {
       console.log('[handleMasterHarvestDataChange] error.message => ', error.message);
@@ -355,9 +370,12 @@ console.log({theMasterStakingBalance})
         stakeLPTokens={handleStakeLPTokens}
         stakeMasterTokens={handleStakeMasterTokens}
 
+        apy={apy}
+
         unstakePunchTokens={handleUnstakePunchTokens}
         unstakeMasterTokens={handleUnstakeMasterTokens}
         unstakeLPTokens={handleUnstakeLPTokens} />
+
     );
   }
 

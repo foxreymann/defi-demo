@@ -21,7 +21,8 @@ const Main = ({
   unstakeLPTokens,
   unstakeMasterTokens,
   withdraw,
-  masterHarvest
+  masterHarvest,
+  apy
 }) => {
   const inputRef = React.useRef(null);
   const lpInputRef = React.useRef(null);
@@ -79,6 +80,7 @@ const Main = ({
       <hr />
 
       <h4>$PUNCH-TT Liqudity Farm</h4>
+      <h4>APY: {apy}%</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
