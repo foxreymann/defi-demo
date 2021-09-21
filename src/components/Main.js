@@ -58,22 +58,25 @@ const Main = ({
   return (
     <div id="content" className="mt-3 text-muted">
 
-      <h4>Farm</h4>
-      <h4><Currency amount={masterHarvestBalance}/></h4>
+      <h4>Farming Profit</h4>
+      <h4><Currency amount={masterHarvestBalance} currency={'punch'} /></h4>
       <button
         className="btn btn-primary btn-block btn-lg"
         onClick={masterHarvest}>
-        HARVEST $PUNCH
+        HARVEST
       </button>
 
-      <h4>Dividends</h4>
+      <hr />
+      <hr />
+      <hr />
+
+      <h4>Dividends Profit</h4>
       <h4><Currency amount={allowanceBalance}/></h4>
       <button
         className="btn btn-primary btn-block btn-lg"
         onClick={withdraw}>
         WITHDRAW
       </button>
-
 
       <hr />
       <hr />

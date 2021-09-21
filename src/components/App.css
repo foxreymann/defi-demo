@@ -25,15 +25,18 @@ h4 {
 
 .currency {
     max-width: 15ch;
-    font-size: 18px;
     text-align: right;
     line-height: 18px;
     font-weight: 500;
     vertical-align: middle;
     background: no-repeat url('/tt.png');
     background-size:contain;
-    padding-left: 22px;
+    padding-left: 28px;
     font-family: Arial;
+}
+
+.currency.punch {
+  background-image: url('/punch.png');
 }
 
 /* Tokenomics */

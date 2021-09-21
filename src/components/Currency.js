@@ -1,7 +1,7 @@
 import React from 'react';
 import Web3 from "web3";
 
-const Currency = ({ amount }) => {
+const Currency = ({ amount, currency }) => {
   if(amount) {
     amount = Web3.utils.fromWei(amount)
 
@@ -14,7 +14,7 @@ const Currency = ({ amount }) => {
     }
 
     return (
-      <span className={`currency`}>
+      <span className={`currency ${currency}`}>
         { (+amount).toLocaleString(navigator.language) }
       </span>
     )
