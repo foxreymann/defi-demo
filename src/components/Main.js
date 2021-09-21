@@ -3,6 +3,7 @@ import React from 'react';
 
 import ttswap from '../ttswap.png';
 import punch from '../punch.png';
+import lp from '../lp.png';
 import m8x from '../icon-8x.png';
 import Currency from './Currency';
 
@@ -82,13 +83,13 @@ const Main = ({
       <hr />
       <hr />
 
-      <h4>$PUNCH-TT Liqudity Farm</h4>
+      <h4><img src={lp} height='32' /> Farm</h4>
       <h4>APY: {apy}%</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
-            <th scope="col">Wallet $PUNCH LP</th>
-            <th scope="col">Staked $PUNCH LP</th>
+            <th scope="col">Wallet PUNCH-TT LP</th>
+            <th scope="col">Staked PUNCH-TT LP</th>
           </tr>
         </thead>
         <tbody>
@@ -139,7 +140,7 @@ const Main = ({
       <hr />
       <hr />
       <hr />
-      <h4>$PUNCH <img src={punch} height='32' /> Staking</h4>
+      <h4>$punch <img src={punch} height='32' /> staking</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
