@@ -91,7 +91,7 @@ const Main = ({
       <hr />
       <hr />
 
-      <h4><img src={lp} height='32' /> Farm</h4>
+      <h4>PUNCH-TT <img src={lp} height='32' /> Farm</h4>
       <h4>APY: {round(apy)}%</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
@@ -120,15 +120,14 @@ const Main = ({
             <div className="input-group mb-4">
               <div className="input-group-prepend">
                 <div className="input-group-text">
-                  <img src={punch} height="32" />
-                  <img src={ttswap} height='20' />
+                  <img src={lp} height="32" />
                 </div>
               </div>
               <input
                 type="text"
                 ref={masterInputRef}
                 className="form-control form-control-lg"
-                placeholder="0"
+                defaultValue={window.web3.utils.fromWei(lpTokenBalance, 'Ether')}
                 required />
             </div>
             <button
@@ -148,12 +147,12 @@ const Main = ({
       <hr />
       <hr />
       <hr />
-      <h4>$punch <img src={punch} height='32' /> staking</h4>
+      <h4>PUNCH <img src={punch} height='32' /> Dividends</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
-            <th scope="col">Wallet $PUNCH</th>
-            <th scope="col">Staked $PUNCH</th>
+            <th scope="col">Wallet PUNCH</th>
+            <th scope="col">Staked PUNCH</th>
           </tr>
         </thead>
         <tbody>
@@ -201,13 +200,12 @@ const Main = ({
       <hr />
       <hr />
       <hr />
-      <h4><img src={ttswap} height='32' /> Liqudity Staking&nbsp;<img src={m8x} height='80' style={{ 'paddingBottom': '10px'}} />
-      </h4>
+      <h4>PUNCH-TT <img src={lp} height='32' /> Dividends</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>
-            <th scope="col">Wallet $PUNCH LP</th>
-            <th scope="col">Staked $PUNCH LP</th>
+            <th scope="col">Wallet PUNCH-TT LP</th>
+            <th scope="col">Staked PUNCH-TT LP</th>
           </tr>
         </thead>
         <tbody>
@@ -230,8 +228,7 @@ const Main = ({
             <div className="input-group mb-4">
               <div className="input-group-prepend">
                 <div className="input-group-text">
-                  <img src={punch} height="32" />
-                  <img src={ttswap} height='20' />
+                  <img src={lp} height='32' />
                 </div>
               </div>
               <input
@@ -245,7 +242,6 @@ const Main = ({
               type="submit"
               className="btn btn-primary btn-block btn-lg multibutton">
               STAKE!
-              <img src={m8x} />
             </button>
           </form>
           <button
