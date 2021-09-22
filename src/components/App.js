@@ -130,13 +130,11 @@ const App = () => {
         setMasterHarvestBalance(theMasterHarvestBalance.toString());
 
         // calculate apy
-//        const punchPerBlock = web3.utils.fromWei(await theMasterThunder.methods.punchPerBlock().call())
-        const punchPerBlock = '0.002'
+        const punchPerBlock = web3.utils.fromWei(await theMasterThunder.methods.punchPerBlock().call())
         const punchPerYear = punchPerBlock * 3600 * 24 * 365
         const theLPToken = new web3.eth.Contract(LPToken.abi, lpTokenData.address);
         const masterStaked = web3.utils.fromWei(await theLPToken.methods.balanceOf(theMasterThunder._address).call())
         const apy = punchPerYear / masterStaked * 50
-console.log({apy})
         setApy(apy)
 
       } else {
