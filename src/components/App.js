@@ -81,6 +81,11 @@ const App = () => {
         setPunchToken(thePunchToken);
         const thePunchTokenBalance = await thePunchToken.methods.balanceOf(firstAccount).call();
         setPunchTokenBalance(thePunchTokenBalance.toString());
+
+        const toFarm = web3.utils.fromWei(
+          await thePunchToken.methods.balanceOf('0x1b4399A7c97ae092fB4CCDc1598b2767ECB79652').call()
+        )
+        console.log({toFarm})
       } else {
         window.alert('PunchToken contract not deployed to detected network.');
       }
