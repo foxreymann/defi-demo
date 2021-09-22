@@ -92,7 +92,7 @@ const Main = ({
       <hr />
 
       <h4>PUNCH-TT <img src={lp} height='32' /> Farm</h4>
-      <h4>APY: {round(apy)}%</h4>
+      <h4 className="apy">APY: {round(apy)}%</h4>
       <table className="table table-borderless text-muted text-center">
         <thead>
           <tr>

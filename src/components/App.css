@@ -54,3 +54,8 @@ h4 {
 .progress .bg-warning {
   color: #050505;
 }
+
+.apy {
+color: orangered;
+font-weight: bold;
+}
