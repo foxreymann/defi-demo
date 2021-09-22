@@ -111,9 +111,12 @@ const App = () => {
       const lpFarmData = LPFarm.networks[networkId];
       if(lpFarmData) {
         const theLPFarm = new web3.eth.Contract(LPFarm.abi, lpFarmData.address);
+        const theLPToken = new web3.eth.Contract(LPToken.abi, lpTokenData.address);
         setLPFarm(theLPFarm);
         const theLPStakingBalance = await theLPFarm.methods.stakingBalance(firstAccount).call();
         setLPStakingBalance(theLPStakingBalance);
+        const lpFarmStaked = web3.utils.fromWei(await theLPToken.methods.balanceOf(theLPFarm._address).call())
+        console.log({lpFarmStaked})
       } else {
         window.alert('LPFarm contract not deployed to detected network.');
       }
@@ -133,9 +136,15 @@ const App = () => {
         const punchPerBlock = web3.utils.fromWei(await theMasterThunder.methods.punchPerBlock().call())
         const punchPerYear = punchPerBlock * 3600 * 24 * 365
         const theLPToken = new web3.eth.Contract(LPToken.abi, lpTokenData.address);
-        const masterStaked = web3.utils.fromWei(await theLPToken.methods.balanceOf(theMasterThunder._address).call())
+        const masterStaked = web3.utils.fromWei(
+          await theLPToken.methods.balanceOf(theMasterThunder._address).call()
+        )
+        console.log({masterStaked})
+
         const apy = punchPerYear / masterStaked * 50
         setApy(apy)
+
+
 
       } else {
         window.alert('MasterThunder contract not deployed to detected network.');
