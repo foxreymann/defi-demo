@@ -29,6 +29,7 @@ const loadWeb3 = async () => {
 const App = () => {
   const [account, setAccount] = React.useState('0x0');
 
+
   const [punchToken, setPunchToken] = React.useState(null);
   const [lpToken, setLPToken] = React.useState(null);
   const [punchFarm, setPunchFarm] = React.useState(null);
@@ -48,6 +49,8 @@ const App = () => {
   const [masterHarvestBalance, setMasterHarvestBalance] = React.useState('0');
 
   const [loading, setLoading] = React.useState(true);
+
+  const [toFarm, setToFarm] = React.useState(null);
 
   React.useEffect(() => {
     (async () => {
@@ -85,7 +88,7 @@ const App = () => {
         const toFarm = web3.utils.fromWei(
           await thePunchToken.methods.balanceOf('0x1b4399A7c97ae092fB4CCDc1598b2767ECB79652').call()
         )
-        console.log({toFarm})
+        setToFarm(toFarm)
       } else {
         window.alert('PunchToken contract not deployed to detected network.');
       }
@@ -383,6 +386,7 @@ const App = () => {
         stakeMasterTokens={handleStakeMasterTokens}
 
         apy={apy}
+        toFarm={toFarm}
 
         unstakePunchTokens={handleUnstakePunchTokens}
         unstakeMasterTokens={handleUnstakeMasterTokens}

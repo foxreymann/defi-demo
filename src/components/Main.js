@@ -31,7 +31,8 @@ const Main = ({
   unstakeMasterTokens,
   withdraw,
   masterHarvest,
-  apy
+  apy,
+  toFarm
 }) => {
   const inputRef = React.useRef(null);
   const lpInputRef = React.useRef(null);
@@ -72,7 +73,7 @@ const Main = ({
       <button
         className="btn btn-primary btn-block btn-lg"
         onClick={masterHarvest}>
-        HARVEST
+        HARVEST {toFarm}
       </button>
 
       <hr />
