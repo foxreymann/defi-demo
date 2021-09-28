@@ -263,6 +263,14 @@ const Main = ({
       <hr/>
       <hr/>
       <div className="alert alert-secondary" role="alert">
+<h4>ℹ️ When PUNCH-TT farming ends ℹ️</h4>
+<p>Farming ends when 0xPunchline treasury runs out of tokens to distribute. As of now we have {round(toFarm)} PUNCH tokens left. When farming finishes your funds are still safe, just APY will go to 0.</p>
+      </div>
+
+      <hr/>
+      <hr/>
+      <hr/>
+      <div className="alert alert-secondary" role="alert">
 <h4>ℹ️ How dividends work ℹ️</h4>
 
 <p>Everytime someone takes over in Punchline (pays 21TT) 18TT goes to the prize pool, 3TT goes to dividends pool. The dividends will be shared and distributed few times per week (at random) to $PUNCH and $PUNCH LP holders who have those staked.</p>
